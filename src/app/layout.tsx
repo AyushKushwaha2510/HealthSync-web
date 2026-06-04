@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Nunito } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/providers/redux-provider';
 import Navbar from '@/components/Navbar';
+import { ThemeProvider } from 'next-themes';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -20,11 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${nunito.className} h-full antialiased`}>
+    <html lang="en" className={`${nunito.className} h-full antialiased`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col">
         <ReduxProvider>
-          <Navbar />
-          {children}
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Navbar />
+            {children}
+          </ThemeProvider>
         </ReduxProvider>
       </body>
     </html>
