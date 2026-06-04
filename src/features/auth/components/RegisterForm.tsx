@@ -6,7 +6,7 @@ import { RegisterUserDto } from '../types/register.dto';
 
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
   Select,
@@ -43,31 +43,38 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <Card className="w-full max-w-md shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-center text-2xl">Create Account</CardTitle>
-        </CardHeader>
+    <div className="flex items-center justify-center p-6">
+      <Card className="w-full max-w-lg border-0 shadow-2xl">
+        {/* <CardHeader className="space-y-2 text-center">
+          <CardTitle className="text-3xl font-bold">
+            Create Account
+          </CardTitle>
 
-        <CardContent className="space-y-4">
-          {/* First Name */}
-          <div className="space-y-2">
-            <Label>First Name</Label>
-            <Input
-              name="firstName"
-              placeholder="Enter first name"
-              onChange={handleChange}
-            />
-          </div>
+          <CardDescription>
+            Join our healthcare platform today
+          </CardDescription>
+        </CardHeader> */}
 
-          {/* Last Name */}
-          <div className="space-y-2">
-            <Label>Last Name</Label>
-            <Input
-              name="lastName"
-              placeholder="Enter last name"
-              onChange={handleChange}
-            />
+        <CardContent className="space-y-5">
+          <div className="grid grid-cols-2 gap-4">
+            {/* First Name */}
+            <div className="space-y-2">
+              <Label>First Name</Label>
+              <Input
+                name="firstName"
+                placeholder="John"
+                onChange={handleChange}
+              />
+            </div>
+            {/* Last Name */}
+            <div className="space-y-2">
+              <Label>Last Name</Label>
+              <Input
+                name="lastName"
+                placeholder="Doe"
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
           {/* Email */}
@@ -108,7 +115,6 @@ export default function RegisterForm() {
           </div>
 
           {/* Gender */}
-          {/* Gender */}
           <div className="space-y-2">
             <Label>Gender</Label>
 
@@ -132,17 +138,29 @@ export default function RegisterForm() {
             </Select>
           </div>
 
-          <Button className="w-full" onClick={handleSubmit} disabled={loading}>
-            {loading ? 'Creating account...' : 'Register'}
+          <Button
+            className="h-11 w-full bg-teal-500 text-white hover:bg-teal-600"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? 'Creating Account...' : 'Create Account'}
           </Button>
 
-          {success && <p>{success}</p>}
+          {success && (
+            <div className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
+              {success}
+            </div>
+          )}
           {error && (
-            <div>
+            <div className="rounded-lg border border-red-200 bg-red-50 p-3">
               {Array.isArray(error) ? (
-                error.map((e, i) => <p key={i}>{e}</p>)
+                <ul className="list-disc space-y-1 pl-5 text-sm text-red-600">
+                  {error.map((e, i) => (
+                    <li key={i}>{e}</li>
+                  ))}
+                </ul>
               ) : (
-                <p>{error}</p>
+                <p className="text-sm text-red-600">{error}</p>
               )}
             </div>
           )}

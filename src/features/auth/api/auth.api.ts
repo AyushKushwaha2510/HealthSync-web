@@ -9,6 +9,10 @@ export const loginApi = async (data: LoginUserDto) => {
 
 export const registerApi = async (data: RegisterUserDto) => {
   const res = await axios.post('/auth/register', data);
-  console.log('res in api', res);
+  return res.data;
+};
+
+export const getMeApi = async () => {
+  const res = await axios.get('/users/me');
   return res.data;
 };

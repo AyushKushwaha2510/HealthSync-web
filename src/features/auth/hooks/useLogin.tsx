@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 // import { loginUser } from "../store/auth.thunks";
 import type { AppDispatch, RootState } from '@/store/store';
-import { setLoading, setUser } from '../store/auth.slice';
+import { setError, setLoading, setSuccess, setUser } from '../store/auth.slice';
 import { loginApi } from '../api/auth.api';
 
 export const useLogin = () => {
@@ -9,6 +9,8 @@ export const useLogin = () => {
 
   const user = useSelector((state: RootState) => state.auth.user);
   const loading = useSelector((state: RootState) => state.auth.loading);
+  const error = useSelector((state: RootState) => state.auth.error);
+  const success = useSelector((state: RootState) => state.auth.success);
 
   // const login = (email: string, password: string) => {
   //   dispatch(loginUser({ email, password }));
@@ -23,11 +25,23 @@ export const useLogin = () => {
         password,
       });
 
-      dispatch(setUser(res.user));
-    } finally {
+      // save token in localstorage
+      localStorage.setItem('token', res.data.accessToken)
+
+      dispatch(setError(null));
+      dispatch(setSuccess(res.message))
+      dispatch(setUser(res.data.user));
+
+
+    }
+    catch (err: any) {
+      dispatch(setSuccess(null));
+      dispatch(setError(err.response?.data.message))
+    }
+    finally {
       dispatch(setLoading(false));
     }
   };
 
-  return { login, user, loading };
+  return { login, user, loading, error, success };
 };

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono, Nunito } from 'next/font/google';
 import './globals.css';
 import ReduxProvider from '@/providers/redux-provider';
+import Navbar from '@/components/Navbar';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -21,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${nunito.className} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <ReduxProvider>{children}</ReduxProvider>
+        <ReduxProvider>
+          <Navbar />
+          {children}
+        </ReduxProvider>
       </body>
     </html>
   );

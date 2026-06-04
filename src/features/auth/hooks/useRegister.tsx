@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { RegisterUserDto } from '../types/register.dto';
 import { registerApi } from '../api/auth.api';
+import { isNull } from 'util';
 
 export const useRegister = () => {
   const [loading, setLoading] = useState(false);
@@ -13,13 +14,15 @@ export const useRegister = () => {
       setError(null);
 
       const res = await registerApi(data);
-      console.log('rers', res);
+
       setSuccess(res.message);
       return res;
-    } catch (err: any) {
-      console.log('error', err.response);
+    }
+    catch (err: any) {
+      setSuccess(null);
       setError(err.response?.data.message || 'Registration failed');
-    } finally {
+    }
+    finally {
       setLoading(false);
     }
   };
