@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -21,13 +21,17 @@ export default function LoginForm() {
   const router = useRouter()
   const role = user?.role
 
-  if (role === 'admin') {
-    router.push('/admin/dashboard');
-  } else if (role === 'doctor') {
-    router.push('/doctor/dashboard');
-  } else if (role === 'patient') {
-    router.push('/patient/dashboard');
-  }
+  useEffect(() => {
+    if (!user) return; // Wait until the user object actually exists
+
+    if (user.role === 'admin') {
+      router.push('/admin/dashboard');
+    } else if (user.role === 'doctor') {
+      router.push('/doctor/dashboard');
+    } else if (user.role === 'patient') {
+      router.push('/patient/dashboard');
+    }
+  }, [user, router]);
 
   return (
     <div className="flex items-center justify-center p-6">

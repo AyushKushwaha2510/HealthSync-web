@@ -20,8 +20,9 @@ export function AuthProvider({
     const loadUser = async () => {
       try {
         const user = await getMeApi();
-        console.log("yuser from getme ai", user)
+        console.log("user, get me", user)
         dispatch(setUser(user));
+        
       } catch (err) {
         console.log(err);
         localStorage.removeItem('token');

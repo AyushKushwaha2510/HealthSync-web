@@ -97,11 +97,38 @@ export default function RegisterForm() {
               onChange={handleChange}
             />
           </div>
+          
+          <div className="grid grid-cols-2 gap-4">
 
-          {/* DOB */}
-          <div className="space-y-2">
-            <Label>Date of Birth</Label>
-            <Input name="dob" type="date" onChange={handleChange} />
+            {/* DOB */}
+            <div className="space-y-2">
+              <Label>Date of Birth</Label>
+              <Input name="dob" type="date" onChange={handleChange} />
+            </div>
+
+            {/* Gender */}
+            <div className="space-y-2">
+              <Label>Gender</Label>
+
+              <Select
+                onValueChange={(value) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    gender: value as RegisterUserDto['gender'],
+                  }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select gender" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="male">Male</SelectItem>
+                  <SelectItem value="female">Female</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Blood Group */}
@@ -112,30 +139,6 @@ export default function RegisterForm() {
               placeholder="e.g. O+, A-"
               onChange={handleChange}
             />
-          </div>
-
-          {/* Gender */}
-          <div className="space-y-2">
-            <Label>Gender</Label>
-
-            <Select
-              onValueChange={(value) =>
-                setForm((prev) => ({
-                  ...prev,
-                  gender: value as RegisterUserDto['gender'],
-                }))
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select gender" />
-              </SelectTrigger>
-
-              <SelectContent>
-                <SelectItem value="male">Male</SelectItem>
-                <SelectItem value="female">Female</SelectItem>
-                <SelectItem value="other">Other</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           <Button

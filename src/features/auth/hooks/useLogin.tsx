@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-// import { loginUser } from "../store/auth.thunks";
 import type { AppDispatch, RootState } from '@/store/store';
 import { setError, setLoading, setSuccess, setUser } from '../store/auth.slice';
-import { loginApi } from '../api/auth.api';
+import { loginApi, getMeApi } from '../api/auth.api'; // Import getMeApi here
+import { useEffect } from 'react';
 
 export const useLogin = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -12,31 +12,36 @@ export const useLogin = () => {
   const error = useSelector((state: RootState) => state.auth.error);
   const success = useSelector((state: RootState) => state.auth.success);
 
-  // const login = (email: string, password: string) => {
-  //   dispatch(loginUser({ email, password }));
-  // };
+  useEffect(() => {
+    console.log("Redux user updated:", user);
+  }, [user]);
 
   const login = async (email: string, password: string) => {
     try {
       dispatch(setLoading(true));
 
-      const res = await loginApi({
-        email,
-        password,
-      });
+      // 1. Authenticate
+      const res = await loginApi({ email, password });
 
-      // save token in localstorage
-      localStorage.setItem('token', res.data.accessToken)
+      // Note: Since loginApi already returns `axiosRes.data`, 
+      // your token is likely `res.accessToken` or `res.data.accessToken` depending on your backend.
+      const token = res.data?.accessToken || res.accessToken;
+      localStorage.setItem('token', token);
+
+      // 2. Immediately fetch the full user profile! 
+      // This solves the "missing data until refresh" bug.
+      const userData = await getMeApi();
 
       dispatch(setError(null));
-      dispatch(setSuccess(res.message))
-      dispatch(setUser(res.data.user));
+      dispatch(setSuccess(res.message || 'Login successful!'));
 
+      // 3. Set the full user data into Redux
+      dispatch(setUser(userData));
 
     }
     catch (err: any) {
       dispatch(setSuccess(null));
-      dispatch(setError(err.response?.data.message))
+      dispatch(setError(err.response?.data?.message || 'Login failed'));
     }
     finally {
       dispatch(setLoading(false));

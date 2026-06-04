@@ -14,14 +14,15 @@ import { RootState } from '@/store/store';
 import { logout } from '@/features/auth/store/auth.slice';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
+import ThemeToggle from './ToogleTheme';
 
 export default function Navbar() {
 
   const user = useSelector((state: RootState) => state.auth.user);
-
+  console.log('user navbar', user)
   const dispatch = useDispatch();
   const router = useRouter();
-console.log("user", user)
+
   const handleLogout = () => {
     localStorage.removeItem('token');
 
@@ -31,8 +32,8 @@ console.log("user", user)
   };
 
   return (
-    <nav className="border-b bg-white fixed w-full z-50">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+    <nav className="fixed top-0 w-full z-50 border-b border-black/20 bg-white/50 backdrop-blur-sm">
+      <div className="mx-auto flex h-16 max-w-[100rem] items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-bold text-blue-600">HealthSync</span>
@@ -40,9 +41,9 @@ console.log("user", user)
 
         {/* Navigation */}
         <NavigationMenu>
-          <NavigationMenuList>
+          <NavigationMenuList className='space-x-2'>
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuTrigger className='lg:text-[16px]'>Services</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid w-[400px] gap-2 p-4">
                   <NavigationMenuLink asChild>
@@ -104,38 +105,61 @@ console.log("user", user)
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  href={`/${user?.role}/dashboard`}
+                  className="group inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-slate-100"
+                >
+                  Dashboard
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
+
+          <ThemeToggle />
           {user ? (
             <div className='flex space-x-2 items-center'>
               <p>
                 Hi, {user.firstName}
               </p>
-            <Button
-              className='rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50'
-              variant="destructive"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
+              <Button
+                className='rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50'
+                variant="destructive"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
             </div>
           ) : (
             <>
               <Link
                 href="/login"
-                className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50"
+                // className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50"
               >
-                Login
+                <Button 
+                className='px-4 py-2 text-sm lg:text-md font-medium'
+                variant={"outline"}
+                >
+                  Login
+                </Button>
               </Link>
 
               <Link
                 href="/register"
-                className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+                // className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
               >
-                Register
+                <Button 
+                className='px-4 py-2 text-sm lg:text-md font-medium bg-teal-400 text-white'
+                variant={"secondary"}
+                >
+                  Register
+                </Button>
               </Link>
             </>
           )}

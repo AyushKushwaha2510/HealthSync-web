@@ -37,10 +37,10 @@ export default function RegisterPage() {
       </section>
 
       {/* Right Side */}
-      <main className="flex flex-1 items-center justify-center bg-white px-6 py-10">
+      <main className="flex flex-1 items-center justify-center px-6 py-10 bg-linear-150 from-blue-400 via-teal-400 to-purple-300">
         <div className="w-full max-w-md">
           {/* Logo */}
-          <div className="mb-8">
+          <div className="mb-8 w-max mx-auto text-center">
             <h2 className="text-3xl font-bold text-slate-900">
               Create Account
             </h2>

@@ -1,3 +1,5 @@
+import { Gender } from "./register.dto";
+
 export enum Role {
   ADMIN = 'admin',
   DOCTOR = 'doctor',
@@ -10,4 +12,7 @@ export type User = {
   lastName: string;
   email: string;
   role: Role;
+  gender?:Gender;
+  dob?:string;
+  bloodGroup?:string;
 };

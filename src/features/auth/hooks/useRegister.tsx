@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { RegisterUserDto } from '../types/register.dto';
 import { registerApi } from '../api/auth.api';
-import { isNull } from 'util';
 
 export const useRegister = () => {
   const [loading, setLoading] = useState(false);
