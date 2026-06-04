@@ -1,7 +1,7 @@
 export enum Role {
   ADMIN = 'admin',
   DOCTOR = 'doctor',
-  PATIENT = 'patient'
+  PATIENT = 'patient',
 }
 
 export type User = {
