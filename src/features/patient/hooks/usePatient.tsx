@@ -23,8 +23,6 @@ export const usePatient = () => {
       setError(null);
       setSuccess(null);
 
-      console.log('req aa gya ')
-
       const res = await getMyDetailsApi();
 
       setPatient(res.data);

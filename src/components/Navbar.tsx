@@ -19,7 +19,7 @@ import ThemeToggle from './ToogleTheme';
 export default function Navbar() {
 
   const user = useSelector((state: RootState) => state.auth.user);
-  console.log('user navbar', user)
+
   const dispatch = useDispatch();
   const router = useRouter();
 

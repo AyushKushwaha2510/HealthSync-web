@@ -12,10 +12,6 @@ export const useLogin = () => {
   const error = useSelector((state: RootState) => state.auth.error);
   const success = useSelector((state: RootState) => state.auth.success);
 
-  useEffect(() => {
-    console.log("Redux user updated:", user);
-  }, [user]);
-
   const login = async (email: string, password: string) => {
     try {
       dispatch(setLoading(true));
