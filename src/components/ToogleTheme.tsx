@@ -22,7 +22,7 @@ export default function ThemeToggle() {
   return (
     <div
       className="
-        flex items-center gap-1 p-1 rounded-full bg-white/5 dark:bg-black/20 backdrop-blur-2xl border border-white/10 dark:border-white/10"
+        flex items-center gap-1 p-1 rounded-full bg-white/5 dark:bg-black/20 backdrop-blur-2xl border border-gray-400/20  dark:border-white/10"
     >
       {options.map((opt) => {
         const active = current === opt.key;
@@ -32,11 +32,10 @@ export default function ThemeToggle() {
             key={opt.key}
             onClick={() => setTheme(opt.key)}
             className={`
-              w-9 h-9 flex items-center justify-center rounded-full transition-all duration-200 hover:scale-105
-              ${
-                active
-                  ? "bg-white/20 dark:bg-white/10 shadow-md"
-                  : "opacity-60 hover:opacity-100"
+              w-9 h-9 flex items-center justify-center rounded-full transition-all duration-200 hover:scale-105 hover:cursor-pointer
+              ${active
+                ? "bg-white/20 dark:bg-white/10 shadow-md"
+                : "opacity-60 hover:opacity-100"
               }
             `}
             title={opt.key}
