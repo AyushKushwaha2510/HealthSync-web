@@ -5,7 +5,7 @@ import { useGetRequestById } from '../hooks/useGetRequestById';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { DoctorRequestDto, Status } from '../types/register-doctor.dto';
+import { DoctorRequestDto, RequestUpdateDto, Status } from '../types/register-doctor.dto';
 import { Input } from '@/components/ui/input';
 import { useUpdateStatus } from '../hooks/useUpdateStatus';
 import Loading from '@/components/Loading';
@@ -24,7 +24,10 @@ export default function DetailsOfRequest() {
     error: fetchError,
   } = useGetRequestById();
 
-  const [response, setResponse] = useState<Partial<DoctorRequestDto>>({})
+  const [response, setResponse] = useState<RequestUpdateDto>({
+    id: '',
+    status: Status.PENDING,
+  })
 
   const {
     findAllHospitals,
@@ -53,11 +56,17 @@ export default function DetailsOfRequest() {
 
   useEffect(() => {
     if (pendingRequestById) {
-      setResponse(pendingRequestById);
+      setResponse({
+        id: pendingRequestById.id,
+        status: pendingRequestById.status,
+        rejectionReason: pendingRequestById.rejectionReason,
+      });
     }
   }, [pendingRequestById]);
 
-  console.log('respnse, init', response)
+  useEffect(() => {
+  console.log('UPDATED RESPONSE', response);
+}, [response]);
 
   if (fetchLoading) return <Loading message='Loading pending requests...' />
   if (fetchError) return <ErrorMessage message={fetchError} />
@@ -265,6 +274,9 @@ export default function DetailsOfRequest() {
 
           {
             success && <SuccessMessage message={success} />
+          }
+          {
+            updateError && <ErrorMessage message={updateError} />
           }
 
         </div>

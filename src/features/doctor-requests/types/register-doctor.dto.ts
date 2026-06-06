@@ -20,6 +20,12 @@ export interface DoctorRequestDto extends RegisterDoctorDto {
   clinics: Clinic[];
 }
 
+export interface RequestUpdateDto  {
+  id: string;
+  status: Status;
+  rejectionReason?: string;
+};
+
 export enum Status {
   PENDING = 'pending',
   APPROVED = 'approved',
