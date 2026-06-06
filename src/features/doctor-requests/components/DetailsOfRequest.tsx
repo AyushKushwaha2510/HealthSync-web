@@ -11,6 +11,8 @@ import { useUpdateStatus } from '../hooks/useUpdateStatus';
 import Loading from '@/components/Loading';
 import ErrorMessage from '@/components/ErrorMessage';
 import SuccessMessage from '@/components/SuccessMessage';
+import { useHospital } from '@/features/hospitals/hooks/useHospital';
+import { useClinic } from '@/features/clinics/hooks/useClinic';
 
 
 export default function DetailsOfRequest() {
@@ -25,6 +27,18 @@ export default function DetailsOfRequest() {
   const [response, setResponse] = useState<Partial<DoctorRequestDto>>({})
 
   const {
+    findAllHospitals,
+    hospitals,
+    loading: hospitalLoading
+  } = useHospital()
+
+  const {
+    findAllClinics,
+    clinics,
+    loading: clinicLoading
+  } = useClinic()
+
+  const {
     updateRequestStatus,
     loading: updateLoading,
     error: updateError,
@@ -33,6 +47,8 @@ export default function DetailsOfRequest() {
 
   useEffect(() => {
     fetchPendingById();
+    findAllClinics();
+    findAllHospitals();
   }, []);
 
   useEffect(() => {
@@ -43,17 +59,11 @@ export default function DetailsOfRequest() {
 
   console.log('respnse, init', response)
 
-  if (fetchLoading) {
-    return (
-      <Loading message='Loading pending requests...' />
-    );
-  }
+  if (fetchLoading) return <Loading message='Loading pending requests...' />
+  if (fetchError) return <ErrorMessage message={fetchError} />
+  if (hospitalLoading) return <Loading message='Loading Hospitals' />
+  if (clinicLoading) return <Loading message='Loading Cinics' />
 
-  if (fetchError) {
-    return (
-      <ErrorMessage message={fetchError} />
-    );
-  }
 
   return (
     <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
@@ -92,9 +102,38 @@ export default function DetailsOfRequest() {
 
               <div>
                 <p className="text-sm text-muted-foreground">
-                  Hospital
+                  Hospitals
                 </p>
-                <p>{pendingRequestById.hospital}</p>
+
+                <div className="space-y-1">
+                  {pendingRequestById.hospitals?.length ? (
+                    pendingRequestById.hospitals.map((hospital) => (
+                      <p key={hospital.id}>
+                        {hospital.name}
+                      </p>
+                    ))
+                  ) : (
+                    <p>No hospitals selected</p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm text-muted-foreground">
+                  Clinics
+                </p>
+
+                <div className="space-y-1">
+                  {pendingRequestById.clinics?.length ? (
+                    pendingRequestById.clinics.map((clinic) => (
+                      <p key={clinic.id}>
+                        {clinic.name}
+                      </p>
+                    ))
+                  ) : (
+                    <p>No clinics selected</p>
+                  )}
+                </div>
               </div>
 
               <div>

@@ -1,22 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { RegisterDoctorDto } from '../types/register-doctor.dto';
 import { useSendRequest } from '../hooks/useSendRequest';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useHospital } from '@/features/hospitals/hooks/useHospital';
+import Loading from '@/components/Loading';
+import { useClinic } from '@/features/clinics/hooks/useClinic';
 
 export default function DoctorRegisterRequestForm() {
-  const { request, loading, success, error } = useSendRequest();
+  const {
+    request,
+    loading: requestLoading,
+    success,
+    error } = useSendRequest();
 
   const [form, setForm] = useState<RegisterDoctorDto>({
     specialization: '',
     experience: '0',
-    hospital: '',
+    hospitalIds: [],
+    clinicIds: [],
     licenseNumber: '',
   });
+
+  const {
+    findAllHospitals,
+    hospitals,
+    loading: hospitalLoading
+  } = useHospital()
+
+  const {
+    findAllClinics,
+    clinics,
+    loading: clinicLoading
+  } = useClinic()
+
+  useEffect(() => {
+    findAllHospitals();
+    findAllClinics();
+  }, [])
+
+  if (hospitalLoading) return <Loading message='Loading Hospitals' />
+  if (clinicLoading) return <Loading message='Loading Cinics' />
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -58,14 +87,82 @@ export default function DoctorRegisterRequestForm() {
           </div>
 
           {/* Hospital */}
-          <div className="space-y-2">
-            <Label>Hospital</Label>
-            <Input
-              type='text'
-              name="hospital"
-              onChange={handleChange}
-            />
-          </div>
+          {hospitals
+            && (
+              <div className="space-y-3">
+                <Label>Hospitals</Label>
+
+                <div className="grid gap-2">
+                  {hospitals.map((hospital) => (
+                    <label
+                      key={hospital.id}
+                      className="flex items-center gap-2 rounded border p-3 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={form.hospitalIds.includes(hospital.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setForm((prev) => ({
+                              ...prev,
+                              hospitalIds: [...prev.hospitalIds, hospital.id],
+                            }));
+                          } else {
+                            setForm((prev) => ({
+                              ...prev,
+                              hospitalIds: prev.hospitalIds.filter(
+                                (id) => id !== hospital.id
+                              ),
+                            }));
+                          }
+                        }}
+                      />
+
+                      <span>{hospital.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+          {/* Clinics */}
+          {clinics
+            && (
+              <div className="space-y-3">
+                <Label>Clinics</Label>
+
+                <div className="grid gap-2">
+                  {clinics.map((clinic) => (
+                    <label
+                      key={clinic.id}
+                      className="flex items-center gap-2 rounded border p-3 cursor-pointer"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={form.clinicIds.includes(clinic.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setForm((prev) => ({
+                              ...prev,
+                              clinicIds: [...prev.clinicIds, clinic.id],
+                            }));
+                          } else {
+                            setForm((prev) => ({
+                              ...prev,
+                              clinicIds: prev.clinicIds.filter(
+                                (id) => id !== clinic.id
+                              ),
+                            }));
+                          }
+                        }}
+                      />
+
+                      <span>{clinic.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
 
           {/* License Number */}
           <div className="space-y-2">
@@ -80,9 +177,9 @@ export default function DoctorRegisterRequestForm() {
           <Button
             className="h-11 w-full bg-teal-500 text-white hover:bg-teal-600"
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={requestLoading}
           >
-            {loading ? 'Sending...' : 'Send Request'}
+            {requestLoading ? 'Sending...' : 'Send Request'}
           </Button>
 
           {success && (
