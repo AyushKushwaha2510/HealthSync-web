@@ -1,4 +1,4 @@
-export default function ErrorMessage(
+export default function SuccessMessage(
   { message }:
     { message: string }
 ) {
