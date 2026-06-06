@@ -24,13 +24,19 @@ export const pendingRequestByIdApi = async (id: string) => {
 export const approveDoctorRequestApi = async (
   data: Partial<DoctorRequestDto>,
 ) => {
+  console.log('api res apprive')
   const res = await axios.patch(`/admin/doctor-requests/${data.id}/approve`);
+  console.log('api res apprive', res)
   return res.data;
 };
 
 export const rejectDoctorRequestApi = async (
   data: Partial<DoctorRequestDto>,
 ) => {
-  const res = await axios.patch(`/admin/doctor-requests/${data.id}/reject`);
+  const res = await axios.patch(
+    `/admin/doctor-requests/${data.id}/reject`,
+    data,
+  );
+  console.log('api res reject', res)
   return res.data;
 };
