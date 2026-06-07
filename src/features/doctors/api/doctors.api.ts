@@ -7,3 +7,8 @@ export const getAllDoctorsApi = async (data: Partial<Doctor>) => {
   });
   return res.data;
 };
+
+export const getDoctorByIdApi = async (id: string) => {
+  const res = await axios.get(`/admin/all-doctors/${id}`);
+  return res.data;
+};

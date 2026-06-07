@@ -5,6 +5,7 @@ import { useDoctors } from "../hooks/useDoctors"
 import { Doctor } from "../types/doctor.type";
 import Loading from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
+import Link from "next/link";
 
 export default function AllDoctors({
   specialization,
@@ -19,7 +20,6 @@ export default function AllDoctors({
 
   if (loading) return <Loading message="Loading..." />
   if (error) return <ErrorMessage message={error} />
-  console.log("specialization", specialization)
 
   return (
     <div className="w-full">
@@ -91,9 +91,11 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
           </div>
 
           <div className="mt-5 flex gap-2">
-            <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
-              View Profile
-            </button>
+            <Link href={`/admin/doctors/${doctor.id}`}>
+              <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
+                View Profile
+              </button>
+            </Link>
 
             <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
               Book Appointment
