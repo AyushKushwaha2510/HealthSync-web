@@ -9,8 +9,7 @@ export default function SideBar({ tabs }: { tabs: TabType[] }) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r bg-white p-4 
-    fixed h-max left-4 border">
+    <aside className="w-64 border-r bg-white p-4 fixed h-max left-4 border">
       <nav>
         <ul className="space-y-2">
           {tabs.map((tab) => {

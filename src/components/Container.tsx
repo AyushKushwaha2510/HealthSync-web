@@ -1,14 +1,17 @@
-import React, { ReactNode } from 'react';
-
-interface containerProps {
-  children: ReactNode;
+interface ContainerProps {
+  children: React.ReactNode;
   className?: string;
+  centered?: boolean;
 }
 
-export default function Container({ children, className }: containerProps) {
+export default function Container({
+  children,
+  className,
+  centered = true,
+}: ContainerProps) {
   return (
     <div
-      className={`max-w-[100rem] border border-transparent mx-auto mt-25 p-2 ${className}`}
+      className={`${centered ? 'mx-auto' : ''} max-w-[100rem] mt-25 p-2 ${className}`}
     >
       {children}
     </div>

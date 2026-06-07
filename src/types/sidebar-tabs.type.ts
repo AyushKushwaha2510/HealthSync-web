@@ -1,4 +1,4 @@
 export type TabType = {
-  label:string;
-  path:string;
-}
+  label: string;
+  path: string;
+};
