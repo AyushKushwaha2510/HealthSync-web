@@ -6,6 +6,9 @@ import { PatinetDetailsDto } from '@/features/patients/types/patient';
 export type Doctor = {
   id: string;
   specialization: string;
+  experience: string;
+  licenseNumber: string;
+  // appointments?:Appoinntmnet
   hospitals?: Hospital[];
   clinics?: Clinic[];
   user: User;
