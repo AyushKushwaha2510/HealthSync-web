@@ -12,31 +12,20 @@ export default function DashboardLayout({
 }) {
 
   const user = useSelector((state: RootState) => state.auth.user);
-console.log('user', user)
+
   const tabs = [
     {
       label: 'Profile',
       path: `/${user?.role}/profile`,
     },
-
-    ...(user?.role === 'patient'
-      ? [
-        {
-          label: 'Register as Doctor',
-          path: '/patient/register-doctor',
-        },
-      ]
-      : []),
-
-    ...(user?.role === 'admin'
-      ? [
-        {
-          label: 'Pending Requests',
-          path: '/admin/doctor-requests',
-        },
-      ]
-      : []),
-
+    {
+      label: 'Pending Requests',
+      path: '/admin/doctor-requests',
+    },
+    {
+       label: 'All Doctors',
+      path: '/admin/doctors',
+    },
     {
       label: 'Report a Bug',
       path: '/dashboard/bug',
