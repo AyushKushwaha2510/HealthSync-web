@@ -15,13 +15,13 @@ export default function DocotrSidebar({ tabs }: { tabs: TabType[] }) {
   const activeSpecialization = searchParams.get('specialization');
 
   return (
-    <aside className="fixed left-0 top-15 h-[calc(100vh-60px)] w-max min-w-72 border-r bg-white p-5 shadow-sm">
+    <aside className="fixed left-0 top-15 h-[calc(100vh-60px)] w-max min-w-72 border-r border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
       <div className="mb-6">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
           Doctor Directory
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Filter doctors by specialization
         </p>
       </div>
@@ -47,7 +47,7 @@ export default function DocotrSidebar({ tabs }: { tabs: TabType[] }) {
                     'flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all',
                     isActive
                       ? 'bg-blue-600 text-white shadow'
-                      : 'text-slate-700 hover:bg-slate-100'
+                      : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
                   )}
                 >
                   <span>{tab.label}</span>
@@ -62,12 +62,12 @@ export default function DocotrSidebar({ tabs }: { tabs: TabType[] }) {
         </ul>
       </nav>
 
-      <div className="mt-6 rounded-xl bg-slate-50 p-4">
-        <p className="text-xs uppercase tracking-wide text-slate-500">
+      <div className="mt-6 rounded-xl bg-slate-50 p-4 dark:bg-slate-800">
+        <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
           Current Filter
         </p>
 
-        <p className="mt-1 font-medium text-slate-800">
+        <p className="mt-1 font-medium text-slate-800 dark:text-slate-100">
           {activeSpecialization || 'All Doctors'}
         </p>
       </div>
