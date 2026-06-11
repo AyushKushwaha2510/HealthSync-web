@@ -15,10 +15,13 @@ import { logout } from '@/features/auth/store/auth.slice';
 import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import ThemeToggle from './ToogleTheme';
+import { Role } from '@/features/auth/types/user.type';
 
 export default function Navbar() {
 
   const user = useSelector((state: RootState) => state.auth.user);
+
+  console.log('user nav', user)
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -109,11 +112,19 @@ export default function Navbar() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href={`/${user?.role}/dashboard`}
+                  href={
+                    user?.role === Role.PATIENT
+                      ? `/patient/dashboard/${user?.patient?.id}`
+                      : user?.role === Role.DOCTOR
+                        ? `/doctor/dashboard/${user?.doctor?.id}`
+                        : '/admin/dashboard'
+                  }
+
                   className="group inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-slate-100"
                 >
                   Dashboard
                 </Link>
+
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -140,11 +151,11 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                // className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50"
+              // className="rounded-lg border px-4 py-2 text-sm font-medium transition hover:bg-slate-50"
               >
-                <Button 
-                className='px-4 py-2 text-sm lg:text-md font-medium'
-                variant={"outline"}
+                <Button
+                  className='px-4 py-2 text-sm lg:text-md font-medium'
+                  variant={"outline"}
                 >
                   Login
                 </Button>
@@ -152,11 +163,11 @@ export default function Navbar() {
 
               <Link
                 href="/register"
-                // className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+              // className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
               >
-                <Button 
-                className='px-4 py-2 text-sm lg:text-md font-medium bg-teal-400 text-white'
-                variant={"secondary"}
+                <Button
+                  className='px-4 py-2 text-sm lg:text-md font-medium bg-teal-400 text-white'
+                  variant={"secondary"}
                 >
                   Register
                 </Button>

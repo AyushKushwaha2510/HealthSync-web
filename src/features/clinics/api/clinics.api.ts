@@ -1,7 +1,7 @@
 import axios from '@/lib/axios';
-import { ClinicDto } from '../types/clinic.type';
+import { Clinic } from '../types/clinic.type';
 
-export const registerCliniclApi = async (data: ClinicDto) => {
+export const registerClinicsApi = async (data: Clinic) => {
   const res = await axios.post('/clinics/register');
   return res.data;
 };

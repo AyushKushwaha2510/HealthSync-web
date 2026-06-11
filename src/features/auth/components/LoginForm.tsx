@@ -23,13 +23,14 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (!user) return; // Wait until the user object actually exists
+    console.log('user', user)
 
     if (user.role === 'admin') {
       router.push('/admin/dashboard');
     } else if (user.role === 'doctor') {
-      router.push('/doctor/dashboard');
+      router.push(`/doctor/dashboard/${user.doctor?.id}`);
     } else if (user.role === 'patient') {
-      router.push('/patient/dashboard');
+      router.push(`/patient/dashboard/${user.patient?.id}`);
     }
   }, [user, router]);
 

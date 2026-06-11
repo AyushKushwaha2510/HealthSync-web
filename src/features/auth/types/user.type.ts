@@ -1,4 +1,6 @@
-import { Gender } from "./register.dto";
+import { Doctor } from '@/features/doctors/types/doctor.type';
+import { Gender } from './register.dto';
+import { Patinet } from '@/features/patients/types/patient';
 
 export enum Role {
   ADMIN = 'admin',
@@ -12,7 +14,9 @@ export type User = {
   lastName: string;
   email: string;
   role: Role;
-  gender?:Gender;
-  dob?:string;
-  bloodGroup?:string;
+  gender?: Gender;
+  dob?: string;
+  bloodGroup?: string;
+  doctor?: Doctor;
+  patient?: Patinet;
 };

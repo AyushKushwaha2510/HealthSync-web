@@ -1,8 +1,8 @@
-import { User } from "@/features/auth/types/user.type";
+import { User } from '@/features/auth/types/user.type';
 
-export type PatinetDetailsDto = {
+export type Patinet = {
   id: string;
-  user:User;
-  disease:string[] | null,
+  user: User;
+  disease: string[] | null;
   // appointments:Appointments
 };
