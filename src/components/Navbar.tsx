@@ -114,9 +114,9 @@ export default function Navbar() {
                 <Link
                   href={
                     user?.role === Role.PATIENT
-                      ? `/patients/dashboard/${user?.patient?.id}`
+                      ? `/patients/dashboard`
                       : user?.role === Role.DOCTOR
-                        ? `/doctors/dashboard/${user?.doctor?.id}`
+                        ? `/doctors/dashboard`
                         : '/admin/dashboard'
                   }
 

@@ -28,9 +28,9 @@ export default function LoginForm() {
     if (user.role === 'admin') {
       router.push('/admin/dashboard');
     } else if (user.role === 'doctor') {
-      router.push(`/doctors/dashboard/${user.doctor?.id}`);
+      router.push(`/doctors/dashboard`);
     } else if (user.role === 'patient') {
-      router.push(`/patients/dashboard/${user.patient?.id}`);
+      router.push(`/patients/dashboard/`);
     }
   }, [user, router]);
 
