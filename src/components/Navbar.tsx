@@ -79,7 +79,7 @@ export default function Navbar() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
-                  href="/doctors"
+                  href="/search-doctors"
                   className="group inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-slate-100"
                 >
                   Doctors
