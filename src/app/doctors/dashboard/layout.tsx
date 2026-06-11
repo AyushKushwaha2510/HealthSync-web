@@ -24,7 +24,11 @@ export default function DashboardLayout({
 const tabs = [
   {
     label: 'Profile',
-    path: '/patient/profile',
+    path: '/doctors/profile',
+  },
+  {
+    label: 'Appointments',
+    path: '/doctors/appointments',
   },
   // {
   //   label: 'Register as Doctor',
