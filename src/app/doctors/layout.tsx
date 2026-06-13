@@ -9,14 +9,15 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Container>
-      <div className="flex min-h-screen gap-6">
+    <Container className="flex">
+      {/* <div className="flex min-h-screen gap-6"> */}
         <SideBar tabs={tabs} />
 
-        <main className="flex-1 p-4">
+        {/* <main className="flex-1 p-4"> */}
+         <main className="ml-72 flex-1">
           {children}
         </main>
-      </div>
+      {/* </div> */}
     </Container>
   );
 }
