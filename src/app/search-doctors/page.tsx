@@ -37,10 +37,10 @@ const specializations = [
 const tabs = [
   {
     label: "All Doctors",
-    path: "/admin/doctors",
+    path: "/search-doctors",
   },
   ...specializations.map((label) => ({
     label,
-    path: `/admin/doctors?specialization=${encodeURIComponent(label)}`,
+    path: `/search-doctors?specialization=${encodeURIComponent(label)}`,
   })),
 ];

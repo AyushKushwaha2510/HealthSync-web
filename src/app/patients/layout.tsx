@@ -25,6 +25,10 @@ const tabs = [
     path: '/patients/profile',
   },
   {
+    label: 'Doctors',
+    path: '/search-doctors',
+  },
+  {
     label: 'Appointments',
     path: '/patients/appointments',
   },
