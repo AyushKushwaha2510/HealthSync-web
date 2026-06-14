@@ -97,9 +97,11 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
               </button>
             </Link>
 
-            <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
-              Book Appointment
-            </button>
+            <Link href={`/appointments/${doctor.id}`}>
+              <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+                Book Appointment
+              </button>
+            </Link>
           </div>
         </div>
       </div>
