@@ -2,6 +2,7 @@ import { Appointment } from '@/features/appointments/types/appointment.type';
 import { Clinic } from '@/features/clinics/types/clinic.type';
 import { Doctor } from '@/features/doctors/types/doctor.type';
 import { Hospital } from '@/features/hospitals/types/hospital.type';
+import { WeekDays } from './weekday.enum';
 
 export type Slot = {
   doctor?: Doctor;
@@ -17,4 +18,15 @@ export type DoctorAvailability = {
     data: Appointment[];
     count: number;
   };
+};
+
+export type Availability = {
+  id: string;
+  doctor: Doctor;
+  hospital: Hospital;
+  clinic: Clinic;
+  weekday: WeekDays;
+  startTime: string;
+  endTime: string;
+  slotDuration: number;
 };
