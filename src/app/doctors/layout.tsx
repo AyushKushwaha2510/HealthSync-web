@@ -31,6 +31,10 @@ const tabs = [
     label: 'Appointments',
     path: '/doctors/appointments',
   },
+  {
+    label: 'Your Availability',
+    path: '/doctors/your-availabilities',
+  },
   // {
   //   label: 'Register as Doctor',
   //   path: '/doctors/registration-request',
