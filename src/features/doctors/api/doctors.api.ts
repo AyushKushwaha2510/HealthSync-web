@@ -23,3 +23,8 @@ export const addAvailabilityApi = async (data: CreateDoctorsAvailability) => {
   const res = await axios.post(`/doctors/add-availability`, data);
   return res.data;
 };
+
+export const viewAvailabilityApi = async () => {
+  const res = await axios.get(`/doctors/view-availability`);
+  return res.data;
+};
