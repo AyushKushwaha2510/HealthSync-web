@@ -27,6 +27,7 @@ export default function AllAvailability() {
               <th className="p-3 border">Time Slot</th>
               <th className="p-3 border">Duration</th>
               <th className="p-3 border">Hospital</th>
+              <th className="p-3 border">Clinic</th>
               <th className="p-3 border">Location</th>
               <th className="p-3 border">Phone</th>
             </tr>
@@ -68,10 +69,18 @@ export default function AllAvailability() {
                   {item.hospital?.name ?? "—"}
                 </td>
 
+                                {/* Clinic */}
+                <td className="p-3 border">
+                  {item.clinic?.name ?? "—"}
+                </td>
+
+
                 {/* Location */}
                 <td className="p-3 border text-gray-600">
                   {item.hospital?.address
                     ? `${item.hospital.address.city}, ${item.hospital.address.state}`
+                    : item.clinic?.address
+                    ? `${item.clinic.address.city}, ${item.clinic.address.state}`
                     : "—"}
                 </td>
 
