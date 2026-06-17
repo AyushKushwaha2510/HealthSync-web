@@ -17,7 +17,8 @@ export default function Page() {
       
       {/* Sticky header */}
       <div className="sticky top-0 z-50 bg-white border-b shadow-sm">
-        <div className="p-4">
+        {/* ADDED: flex and justify-center to lock the TabsList in the middle */}
+        <div className="p-4 flex justify-left w-full">
           <TabsList className="grid w-full max-w-md grid-cols-2">
             <TabsTrigger value="view">View Availability</TabsTrigger>
             <TabsTrigger value="add">Add Availability</TabsTrigger>
@@ -26,15 +27,18 @@ export default function Page() {
       </div>
 
       {/* Content */}
-      <Container>
-        <TabsContent value="view">
-          <AllAvailability />
-        </TabsContent>
+      {/* ADDED: min-h-screen to prevent the scrollbar from toggling on/off */}
+      <div className="min-h-screen min-w-7xl">
+        <Container>
+          <TabsContent value="view">
+            <AllAvailability />
+          </TabsContent>
 
-        <TabsContent value="add">
-          <AddAvailabilityForm />
-        </TabsContent>
-      </Container>
+          <TabsContent value="add">
+            <AddAvailabilityForm />
+          </TabsContent>
+        </Container>
+      </div>
 
     </Tabs>
   );

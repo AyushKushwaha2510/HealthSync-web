@@ -244,7 +244,7 @@ export default function AddAvailabilityForm() {
                       {clinics.map((clinic) => (
                         <SelectItem
                           key={clinic.id}
-                          value={clinic.id}
+                          value={clinic.id as string}
                         >
                           {clinic.name}
                         </SelectItem>
@@ -276,7 +276,7 @@ export default function AddAvailabilityForm() {
                       {hospitals.map((hospital) => (
                         <SelectItem
                           key={hospital.id}
-                          value={hospital.id}
+                          value={hospital.id as string}
                         >
                           {hospital.name}
                         </SelectItem>
