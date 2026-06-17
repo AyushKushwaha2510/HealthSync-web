@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Clinic } from "../types/clinic.type";
-import { getAllCliniclsApi } from "../api/clinics.api";
+import { getAllClinicsApi } from "../api/clinics.api";
 
 export const useClinic = () => {
 
@@ -14,7 +14,7 @@ export const useClinic = () => {
       setLoading(true);
       setError(null);
 
-      const res = await getAllCliniclsApi();
+      const res = await getAllClinicsApi();
 
       setClinics(res.data)
       setSuccess(res.message);
