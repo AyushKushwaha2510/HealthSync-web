@@ -10,3 +10,8 @@ export const getAllHospitalsApi = async () => {
   const res = await axios.get('hospitals');
   return res.data;
 };
+
+export const getAllHospitalsByDoctorIdApi = async (doctorId: string) => {
+  const res = await axios.get(`hospitals/${doctorId}`);
+  return res.data;
+};

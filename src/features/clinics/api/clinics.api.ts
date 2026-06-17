@@ -6,7 +6,12 @@ export const registerClinicsApi = async (data: Clinic) => {
   return res.data;
 };
 
-export const getAllCliniclsApi = async () => {
+export const getAllClinicsApi = async () => {
   const res = await axios.get('clinics');
+  return res.data;
+};
+
+export const getAllClinicsByDoctorIdApi = async (doctorId: string) => {
+  const res = await axios.get(`clinics/${doctorId}`);
   return res.data;
 };
