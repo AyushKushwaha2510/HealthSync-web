@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DoctorAvailability } from "../types/doctor.type";
 import { getDoctorAvailabilityByIdApi } from "../api/doctors.api";
+import { BookingCriteria } from "../types/booking-criteria.type";
 
 export const useDoctorAvailabilityDetails = () => {
 
@@ -9,13 +10,13 @@ export const useDoctorAvailabilityDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
-  const fetchDoctorAvailabilityDetails = async (id: string) => {
+  const fetchDoctorAvailabilityDetails = async (data: BookingCriteria) => {
 
     try {
       setLoading(true);
       setError(null);
 
-      const res = await getDoctorAvailabilityByIdApi(id);
+      const res = await getDoctorAvailabilityByIdApi(data);
 
       setDoctorAvailability(res.data)
       setSuccess(res.message);

@@ -46,8 +46,8 @@ export default function DoctorAvailabilityDetails({
     });
 
   useEffect(() => {
-    fetchDoctorAvailabilityDetails(id);
-  }, [id]);
+    fetchDoctorAvailabilityDetails(criteria);
+  }, [id, criteria]);
 
   useEffect(() => {
     async function loadData() {
@@ -62,7 +62,11 @@ export default function DoctorAvailabilityDetails({
     }
 
     loadData();
-  }, [id]);
+  }, [id, criteria]);
+  
+    useEffect(() => {
+      console.log('detals', doctorAvailability)
+    },[fetchDoctorAvailabilityDetails])
 
   if (loading)
     return (
@@ -73,7 +77,6 @@ export default function DoctorAvailabilityDetails({
     return (
       <ErrorMessage message={error} />
     );
-
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="flex">
