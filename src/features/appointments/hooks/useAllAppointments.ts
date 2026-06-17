@@ -15,9 +15,8 @@ export const useAllAppointments = () => {
       setLoading(true);
       setError(null);
 
-      console.log('res')
       const res = await getAllAppointmentsApi();
-      console.log('res', res)
+
       setAppointments(res.data)
       setSuccess(res.message);
 

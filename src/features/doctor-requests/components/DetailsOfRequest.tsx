@@ -64,10 +64,6 @@ export default function DetailsOfRequest() {
     }
   }, [pendingRequestById]);
 
-  useEffect(() => {
-  console.log('UPDATED RESPONSE', response);
-}, [response]);
-
   if (fetchLoading) return <Loading message='Loading pending requests...' />
   if (fetchError) return <ErrorMessage message={fetchError} />
   if (hospitalLoading) return <Loading message='Loading Hospitals' />
@@ -264,7 +260,6 @@ export default function DetailsOfRequest() {
 
             <Button
               onClick={() => {
-                console.log('response', response)
                 updateRequestStatus(response)
               }}
             >

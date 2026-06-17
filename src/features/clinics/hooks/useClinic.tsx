@@ -15,7 +15,6 @@ export const useClinic = () => {
       setError(null);
 
       const res = await getAllCliniclsApi();
-      console.log('res', res)
 
       setClinics(res.data)
       setSuccess(res.message);

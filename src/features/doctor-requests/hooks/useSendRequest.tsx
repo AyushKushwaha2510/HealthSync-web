@@ -12,10 +12,8 @@ export const useSendRequest = () => {
     try {
       setLoading(true);
       setError(null);
-      console.log('data', data)
       
       const res = await doctorRequestApi(data);
-      console.log('res', res)
 
       setSuccess(res.message);
 

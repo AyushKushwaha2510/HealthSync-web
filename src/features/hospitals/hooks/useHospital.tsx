@@ -15,7 +15,6 @@ export const useHospital = () => {
       setError(null);
 
       const res = await getAllHospitalsApi();
-      console.log('res', res)
       
       setHospitals(res.data)
       setSuccess(res.message);

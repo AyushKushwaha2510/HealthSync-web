@@ -14,7 +14,7 @@ export default function DoctorAvailabilityDetails({ id }: { id: string }) {
 
   const [clinics, setClinics] = useState<Clinic[] | null>(null);
   const [hospitals, setHospitals] = useState<Hospital[] | null>(null);
-console.log('doctor ', id)
+
   useEffect(() => {
     fetchDoctorAvailabilityDetails(id);
   }, [id])
