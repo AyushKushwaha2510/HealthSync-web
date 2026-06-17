@@ -8,5 +8,5 @@ export const getHospitalName = async () => {
 };
 
 export const getHospitalNameByDoctorId = async (doctorId: string) => {
-  return (await getAllHospitalsByDoctorIdApi(doctorId)).data;
+  return await getAllHospitalsByDoctorIdApi(doctorId);
 };
