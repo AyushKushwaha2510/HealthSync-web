@@ -10,4 +10,5 @@ export type BookingCriteria = {
   weekday?: string;
   fromDate?: string;
   toDate?: string;
+  slot?: string;
 };

@@ -13,13 +13,17 @@ import {
 
 import { BookingCriteria } from './DoctorAvailabilityDetails';
 
+type ExtendedBookingCriteria = BookingCriteria & {
+  slot?: string;
+};
+
 type Props = {
   doctorAvailability: any;
 
-  criteria: BookingCriteria;
+  criteria: ExtendedBookingCriteria;
 
   setCriteria: React.Dispatch<
-    React.SetStateAction<BookingCriteria>
+    React.SetStateAction<ExtendedBookingCriteria>
   >;
 };
 
@@ -74,55 +78,98 @@ export default function AvailabilityPanel({
       <Card>
         <CardHeader>
           <CardTitle>
-            API Criteria
+            Available Slots
           </CardTitle>
         </CardHeader>
 
         <CardContent>
-          <pre>
-            {JSON.stringify(
-              {
-                ...(criteria
-                  .doctorId && {
-                  doctorId:
-                    criteria.doctorId,
-                }),
+          {doctorAvailability?.allSlots?.length ? (
+            <div className="space-y-6">
+              {doctorAvailability.allSlots.map(
+                (availability: any, index: number) => (
+                  <div key={index}>
+                    <h3 className="mb-3 font-semibold capitalize">
+                      {availability.weekday}
+                    </h3>
 
-                ...(criteria
-                  .weekday && {
-                  weekday:
-                    criteria.weekday,
-                }),
+                    <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                      {availability.slots.map(
+                        (slot: string) => {
+                          const occupied =
+                            doctorAvailability.occupiedSlots.some(
+                              (item: any) =>
+                                item.date ===
+                                criteria.fromDate &&
+                                item.slots.includes(slot)
+                            );
 
-                ...(criteria
-                  .hospitalId && {
-                  hospitalId:
-                    criteria.hospitalId,
-                }),
+                          return (
+                            <button
+                              key={slot}
+                              disabled={occupied}
+                              onClick={() =>
+                                setCriteria((prev) => ({
+                                  ...prev,
+                                  slot,
+                                }))
+                              }
+                              className={`rounded-lg border p-3 text-sm font-medium
 
-                ...(criteria
-                  .clinicId && {
-                  clinicId:
-                    criteria.clinicId,
-                }),
+                            ${criteria.slot === slot
+                                  ? "border-blue-600 bg-blue-600 text-white"
+                                  : ""
+                                }
 
-                ...(criteria
-                  .fromDate && {
-                  fromDate:
-                    criteria.fromDate,
-                }),
-
-                ...(criteria
-                  .toDate && {
-                  toDate:
-                    criteria.toDate,
-                }),
-              },
-              null,
-              2
-            )}
-          </pre>
+                            ${occupied
+                                  ? "cursor-not-allowed line-through border-red-300 bg-red-100 text-red-600"
+                                  : "hover:border-blue-500 hover:bg-blue-50"
+                                }
+                          `}
+                            >
+                              {slot}
+                            </button>
+                          );
+                        }
+                      )}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          ) : (
+            <p className="text-muted-foreground">
+              No availability found.
+            </p>
+          )}
         </CardContent>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              Appointment Summary
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent className="space-y-2">
+            <p>
+              Date:
+              {" "}
+              {criteria.fromDate || "-"}
+            </p>
+
+            <p>
+              Weekday:
+              {" "}
+              {criteria.weekday || "-"}
+            </p>
+
+            <p>
+              Slot:
+              {" "}
+              {criteria.slot || "-"}
+            </p>
+          </CardContent>
+        </Card>
       </Card>
     </div>
   );
