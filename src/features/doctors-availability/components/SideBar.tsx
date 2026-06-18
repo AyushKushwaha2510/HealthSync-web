@@ -1,9 +1,12 @@
 'use client';
 
-import { Dispatch, SetStateAction } from 'react';
+import { format } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Clinic } from '@/features/clinics/types/clinic.type';
 import { Hospital } from '@/features/hospitals/types/hospital.type';
+
+import { RootState } from '@/store/store';
 
 import {
   Select,
@@ -20,25 +23,25 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { BookingCriteria } from './DoctorAvailabilityDetails';
+import { Calendar } from '@/components/ui/calendar';
+import { setCriteria } from '../store/booking-criteria.slice';
+import { useEffect, useState } from 'react';
 
 type SidebarProps = {
   clinics: Clinic[];
   hospitals: Hospital[];
-
-  criteria: BookingCriteria;
-
-  setCriteria: Dispatch<
-    SetStateAction<BookingCriteria>
-  >;
 };
 
 export default function Sidebar({
   clinics,
   hospitals,
-  criteria,
-  setCriteria,
 }: SidebarProps) {
+  const dispatch = useDispatch();
+
+  const criteria = useSelector(
+    (state: RootState) => state.criteria.criteria
+  );
+
   const locations = [
     ...(clinics ?? []).map((clinic) => ({
       id: clinic.id,
@@ -47,93 +50,159 @@ export default function Sidebar({
       type: 'clinic' as const,
     })),
 
-    ...(hospitals ?? []).map(
-      (hospital) => ({
-        id: hospital.id,
-        name: hospital.name,
-        address: hospital.address,
-        type: 'hospital' as const,
-      })
-    ),
+    ...(hospitals ?? []).map((hospital) => ({
+      id: hospital.id,
+      name: hospital.name,
+      address: hospital.address,
+      type: 'hospital' as const,
+    })),
   ];
 
+  const selectedLocation = locations.find(
+    (location) =>
+      location.id === criteria?.clinicId ||
+      location.id === criteria?.hospitalId
+  );
+
   return (
-    <aside className="fixed left-0 top-25 h-screen w-[320px] border-r bg-white p-5">
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            Appointment Criteria
-          </CardTitle>
-        </CardHeader>
+    <aside className="fixed left-0 top-15 h-screen w-[320px] overflow-y-auto border-r bg-white p-5">
+      <div className="space-y-5">
+        {/* Location Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              Appointment Criteria
+            </CardTitle>
+          </CardHeader>
 
-        <CardContent>
-          <Select
-            onValueChange={(value) => {
-              const selected =
-                locations.find(
-                  (location) =>
-                    location.id === value
+          <CardContent>
+            <Select
+              onValueChange={(value) => {
+                const selected =
+                  locations.find(
+                    (location) =>
+                      location.id === value
+                  );
+
+                if (!selected) return;
+
+                dispatch(
+                  setCriteria({
+                    hospitalId:
+                      selected.type ===
+                        'hospital'
+                        ? selected.id
+                        : undefined,
+
+                    clinicId:
+                      selected.type ===
+                        'clinic'
+                        ? selected.id
+                        : undefined,
+                  })
                 );
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Location" />
+              </SelectTrigger>
 
-              if (!selected) return;
+              <SelectContent>
+                {locations.map(
+                  (location) => (
+                    <SelectItem
+                      key={location.id}
+                      value={location.id}
+                    >
+                      {location.name} {' • '} {location.address.city}
+                    </SelectItem>
+                  )
+                )}
+              </SelectContent>
+            </Select>
+          </CardContent>
+        </Card>
 
-              setCriteria((prev) => ({
-                ...prev,
+        {selectedLocation && (
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                Selected Location
+              </CardTitle>
+            </CardHeader>
 
-                hospitalId:
-                  selected.type ===
-                  'hospital'
-                    ? selected.id
-                    : undefined,
+            <CardContent>
+              <p className="font-semibold">
+                {selectedLocation.name ?? " dfrtgh"}
+              </p>
 
-                clinicId:
-                  selected.type ===
-                  'clinic'
-                    ? selected.id
-                    : undefined,
-              }));
-            }}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select Location" />
-            </SelectTrigger>
+              <p className="text-sm text-muted-foreground">
+                {selectedLocation.address.line1}
+              </p>
 
-            <SelectContent>
-              {locations.map(
-                (location) => (
-                  <SelectItem
-                    key={location.id}
-                    value={
-                      location.id
-                    }
-                  >
-                    {location.name}
-                    {' • '}
-                    {
-                      location
-                        .address.city
-                    }
-                  </SelectItem>
-                )
-              )}
-            </SelectContent>
-          </Select>
+              <p className="text-sm text-muted-foreground">
+                {selectedLocation.address.city}
+              </p>
+            </CardContent>
+          </Card>
+        )}
 
-          <div className="mt-6 rounded-lg bg-slate-100 p-4">
-            <p className="text-sm font-medium">
+        {/* Calendar Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
+              Select Date
+            </CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <Calendar
+              mode="single"
+              onSelect={(date) => {
+                if (!date) return;
+
+                dispatch(
+                  setCriteria({
+                    fromDate: format(
+                      date,
+                      'yyyy-MM-dd'
+                    ),
+
+                    toDate: format(
+                      date,
+                      'yyyy-MM-dd'
+                    ),
+
+                    weekday: format(
+                      date,
+                      'EEEE'
+                    ).toLowerCase(),
+                  })
+                );
+              }}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Current Filters */}
+        <Card>
+          <CardHeader>
+            <CardTitle>
               Current Filters
-            </p>
+            </CardTitle>
+          </CardHeader>
 
-            <pre className="mt-2 text-xs">
+          <CardContent>
+            <pre className="overflow-x-auto text-xs">
               {JSON.stringify(
                 criteria,
                 null,
                 2
               )}
             </pre>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </aside>
   );
 }

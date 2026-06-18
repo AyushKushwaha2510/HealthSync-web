@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '@/components/Loading';
 import ErrorMessage from '@/components/ErrorMessage';
@@ -11,25 +12,25 @@ import { Hospital } from '@/features/hospitals/types/hospital.type';
 import { getClinicNameByDoctorId } from '@/features/clinics/services/getClinicName';
 import { getHospitalNameByDoctorId } from '@/features/hospitals/services/getHospitalName';
 
+import { RootState } from '@/store/store';
+
 import { useDoctorAvailabilityDetails } from '../hooks/useDoctorAvailabilityDetails';
+import { setCriteria } from '../store/booking-criteria.slice';
 
-import AvailabilityPanel from './AvailabilityPanel';
 import Sidebar from './SideBar';
-
-export type BookingCriteria = {
-  doctorId?: string;
-  weekday?: string;
-  hospitalId?: string;
-  clinicId?: string;
-  fromDate?: string;
-  toDate?: string;
-};
+import AvailabilityPanel from './AvailabilityPanel';
 
 export default function DoctorAvailabilityDetails({
   id,
 }: {
   id: string;
 }) {
+  const dispatch = useDispatch();
+
+  const criteria = useSelector(
+    (state: RootState) => state.criteria.criteria
+  );
+
   const {
     fetchDoctorAvailabilityDetails,
     doctorAvailability,
@@ -40,14 +41,13 @@ export default function DoctorAvailabilityDetails({
   const [clinics, setClinics] = useState<Clinic[]>([]);
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
 
-  const [criteria, setCriteria] =
-    useState<BookingCriteria>({
-      doctorId: id,
-    });
-
   useEffect(() => {
-    fetchDoctorAvailabilityDetails(criteria);
-  }, [id, criteria]);
+    dispatch(
+      setCriteria({
+        doctorId: id,
+      })
+    );
+  }, [id, dispatch]);
 
   useEffect(() => {
     async function loadData() {
@@ -62,29 +62,32 @@ export default function DoctorAvailabilityDetails({
     }
 
     loadData();
-  }, [id, criteria]);
-  
-    useEffect(() => {
-      console.log('detals', doctorAvailability)
-    },[fetchDoctorAvailabilityDetails])
+  }, [id]);
 
-  if (loading)
+  useEffect(() => {
+    if (!criteria?.doctorId) return;
+
+    fetchDoctorAvailabilityDetails(criteria);
+  }, [criteria]);
+
+  if (loading) {
     return (
       <Loading message="Loading..." />
     );
+  }
 
-  if (error)
+  if (error) {
     return (
       <ErrorMessage message={error} />
     );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="flex">
         <Sidebar
           clinics={clinics}
           hospitals={hospitals}
-          criteria={criteria}
-          setCriteria={setCriteria}
         />
 
         <main className="ml-[320px] flex-1 p-6">
@@ -92,8 +95,6 @@ export default function DoctorAvailabilityDetails({
             doctorAvailability={
               doctorAvailability
             }
-            criteria={criteria}
-            setCriteria={setCriteria}
           />
         </main>
       </div>
