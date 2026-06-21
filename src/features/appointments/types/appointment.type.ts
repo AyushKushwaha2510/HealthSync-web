@@ -1,7 +1,9 @@
 import { Clinic } from '@/features/clinics/types/clinic.type';
+import { WeekDays } from '@/features/doctors-availability/types/weekday.enum';
 import { Doctor } from '@/features/doctors/types/doctor.type';
 import { Hospital } from '@/features/hospitals/types/hospital.type';
 import { Patinet } from '@/features/patients/types/patient';
+import { Address } from '@/types/address.type';
 
 export enum AppointmentStatus {
   PENDING_PAYMENT = 'pending_payment',
@@ -20,4 +22,16 @@ export type Appointment = {
   patient: Patinet;
   hospital?: Hospital;
   clinic?: Clinic;
+};
+
+export type AppointmentSummary = {
+  appointmentDateTime?: Date;
+  weekday?: WeekDays;
+  notes?: string;
+  doctorName?: string;
+  patientName?: string;
+  location: {
+    name?: string;
+    address?: Address;
+  };
 };
