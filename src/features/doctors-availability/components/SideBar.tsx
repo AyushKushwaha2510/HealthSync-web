@@ -25,7 +25,7 @@ import {
 
 import { Calendar } from '@/components/ui/calendar';
 import { setCriteria } from '../store/booking-criteria.slice';
-import { useEffect, useState } from 'react';
+import { setSummary } from '@/features/appointments/store/appointment-summary.slice';
 
 type SidebarProps = {
   clinics: Clinic[];
@@ -89,16 +89,17 @@ export default function Sidebar({
                 dispatch(
                   setCriteria({
                     hospitalId:
-                      selected.type ===
-                        'hospital'
-                        ? selected.id
-                        : undefined,
+                      selected.type === 'hospital' ? selected.id : undefined,
 
                     clinicId:
-                      selected.type ===
-                        'clinic'
-                        ? selected.id
-                        : undefined,
+                      selected.type === 'clinic' ? selected.id : undefined,
+                  }),
+
+                  setSummary({
+                    location: {
+                      name: selected.name,
+                      address: selected.address
+                    },
                   })
                 );
               }}
