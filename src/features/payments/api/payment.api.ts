@@ -1,5 +1,5 @@
 import api from '@/lib/axios';
-import { CreateOrder, FetchPaymentCriteria, VerifySignature } from '../types/payment.type';
+import { CreateOrder, VerifySignature } from '../types/payment.type';
 
 export const createOrderApi = async (data: CreateOrder) => {
   const res = await api.post('payments/create-order', data);
