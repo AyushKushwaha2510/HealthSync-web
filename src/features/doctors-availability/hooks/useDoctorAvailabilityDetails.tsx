@@ -5,7 +5,7 @@ import { BookingCriteria } from "../types/booking-criteria.type";
 
 export const useDoctorAvailabilityDetails = () => {
 
-  const [doctorAvailability, setDoctorAvailability] = useState<DoctorAvailability[] | null>(null)
+  const [doctorAvailability, setDoctorAvailability] = useState<DoctorAvailability | null>(null)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);

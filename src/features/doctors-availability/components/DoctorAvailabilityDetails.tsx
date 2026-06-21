@@ -33,7 +33,6 @@ export default function DoctorAvailabilityDetails({
 
   const {
     fetchDoctorAvailabilityDetails,
-    doctorAvailability,
     loading,
     error,
   } = useDoctorAvailabilityDetails();
@@ -91,11 +90,7 @@ export default function DoctorAvailabilityDetails({
         />
 
         <main className=" flex-1 p-6">
-          <AvailabilityPanel
-            doctorAvailability={
-              doctorAvailability
-            }
-          />
+          <AvailabilityPanel doctorId={id} />
         </main>
       </div>
     </div>

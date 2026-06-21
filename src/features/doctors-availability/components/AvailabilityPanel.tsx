@@ -12,17 +12,30 @@ import {
 import { RootState } from '@/store/store';
 
 import { setCriteria } from '../store/booking-criteria.slice';
+import { useDoctorAvailabilityDetails } from '../hooks/useDoctorAvailabilityDetails';
+import { useEffect } from 'react';
 
-export default function AvailabilityPanel({
-  doctorAvailability,
-}: {
-  doctorAvailability: any;
-}) {
+export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
   const dispatch = useDispatch();
 
   const criteria = useSelector(
     (state: RootState) => state.criteria.criteria
   );
+
+  const {
+    fetchDoctorAvailabilityDetails,
+    doctorAvailability
+  } = useDoctorAvailabilityDetails()
+
+  useEffect(() => {
+    if (!criteria?.doctorId) return;
+    fetchDoctorAvailabilityDetails(criteria);
+  }, [doctorId])
+  console.log("pannel ka criterua", criteria)
+
+  useEffect(()=>{
+    console.log('detral', doctorAvailability)
+  }, [fetchDoctorAvailabilityDetails])
 
   return (
     <div className="space-y-6">
@@ -49,25 +62,18 @@ export default function AvailabilityPanel({
 
                     <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6">
                       {availability.slots.map(
-                        (slot: string) => {
+                        (slot: string, index: number) => {
                           const occupied =
-                            doctorAvailability.occupiedSlots?.some(
-                              (
-                                item: any
-                              ) =>
-                                item.date ===
-                                  criteria?.fromDate &&
-                                item.slots.includes(
-                                  slot
-                                )
+                            doctorAvailability.occupiedSlots?.data?.some(
+                              (item: any) =>
+                                item.date === criteria?.fromDate &&
+                                item.slots.includes(slot)
                             );
 
                           return (
                             <button
-                              key={slot}
-                              disabled={
-                                occupied
-                              }
+                              key={index}
+                              disabled={occupied}
                               onClick={() =>
                                 dispatch(
                                   setCriteria(
@@ -79,18 +85,16 @@ export default function AvailabilityPanel({
                               }
                               className={`rounded-lg border p-3 text-sm font-medium transition
 
-                              ${
-                                criteria?.slot ===
-                                slot
+                              ${criteria?.slot ===
+                                  slot
                                   ? 'border-blue-600 bg-blue-600 text-white'
                                   : ''
-                              }
+                                }
 
-                              ${
-                                occupied
+                              ${occupied
                                   ? 'cursor-not-allowed border-red-300 bg-red-100 text-red-600 line-through'
                                   : 'hover:border-blue-500 hover:bg-blue-50'
-                              }
+                                }
                             `}
                             >
                               {slot}
