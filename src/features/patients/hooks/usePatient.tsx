@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { PatinetDetailsDto } from '../types/patient';
+import { Patinet } from '../types/patient';
 import { getMyDetailsApi } from '../api/patient.api';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
@@ -7,7 +7,7 @@ import { RootState } from '@/store/store';
 export const usePatient = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  const [patient, setPatient] = useState<PatinetDetailsDto | null>(null);
+  const [patient, setPatient] = useState<Patinet | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
