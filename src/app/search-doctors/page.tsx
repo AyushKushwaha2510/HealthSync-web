@@ -1,14 +1,13 @@
-'use client';
-
 import Container from "@/components/Container";
 import AllDoctors from "@/features/doctors/components/AllDoctors";
 import DoctorsSidebar from "@/features/doctors/components/DoctorsSidebar";
-import { useSearchParams } from 'next/navigation';
 
-export default function Page() {
-
-  const searchParams = useSearchParams();
-  const specialization = searchParams.get('specialization') ?? undefined;
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<{ specialization?: string }>;
+}) {
+  const { specialization } = await searchParams;
 
   return (
     <Container className="flex">
