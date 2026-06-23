@@ -93,15 +93,17 @@ export default function Sidebar({
 
                     clinicId:
                       selected.type === 'clinic' ? selected.id : undefined,
-                  }),
+                  })
+                );
 
+                dispatch(
                   setSummary({
                     location: {
                       name: selected.name,
                       address: selected.address
                     },
                   })
-                );
+                )
               }}
             >
               <SelectTrigger>
