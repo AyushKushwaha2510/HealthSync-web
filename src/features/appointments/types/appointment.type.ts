@@ -25,7 +25,8 @@ export type Appointment = {
 };
 
 export type AppointmentSummary = {
-  appointmentDateTime?: Date;
+  appointmentDate?: string;
+  appointmentTime?: string;
   weekday?: WeekDays;
   notes?: string;
   doctorName?: string;
