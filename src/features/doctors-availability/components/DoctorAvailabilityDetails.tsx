@@ -83,16 +83,14 @@ export default function DoctorAvailabilityDetails({
 
   return (
     <div className="min-h-screen">
-      <div className="flex">
-        <Sidebar
-          clinics={clinics}
-          hospitals={hospitals}
-        />
+      <Sidebar
+        clinics={clinics}
+        hospitals={hospitals}
+      />
 
-        <main className=" flex-1 p-6">
-          <AvailabilityPanel doctorId={id} />
-        </main>
-      </div>
+      <main className="ml-80 min-w-0 p-6">
+        <AvailabilityPanel doctorId={id} />
+      </main>
     </div>
   );
 }
