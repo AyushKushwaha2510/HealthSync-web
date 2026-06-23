@@ -25,6 +25,12 @@ const summarySlice = createSlice({
         ...action.payload,
       };
     },
+    resetSummary(state) {
+      state.summary = null;
+      state.error = null;
+      state.success = null;
+      state.loading = false;
+    },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
@@ -37,6 +43,6 @@ const summarySlice = createSlice({
   },
 });
 
-export const { setSummary, setLoading, setError, setSuccess } =
+export const { setSummary, resetSummary, setLoading, setError, setSuccess } =
   summarySlice.actions;
 export default summarySlice.reducer;
