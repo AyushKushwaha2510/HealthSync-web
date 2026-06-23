@@ -101,7 +101,7 @@ export default function Sidebar({
                     location: {
                       name: selected.name,
                       address: selected.address
-                    },
+                    }
                   })
                 )
               }}
