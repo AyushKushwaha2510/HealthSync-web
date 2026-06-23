@@ -8,6 +8,7 @@ export type Doctor = {
   specialization: string;
   experience: string;
   licenseNumber: string;
+  appointmentFee: number;
   // appointments?:Appoinntmnet
   hospitals?: Hospital[];
   clinics?: Clinic[];

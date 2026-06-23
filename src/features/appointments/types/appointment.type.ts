@@ -30,6 +30,7 @@ export type AppointmentSummary = {
   weekday?: WeekDays;
   notes?: string;
   doctorName?: string;
+  appointmentFee?: number;
   patientName?: string;
   location?: {
     name?: string;
