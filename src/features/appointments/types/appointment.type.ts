@@ -30,7 +30,7 @@ export type AppointmentSummary = {
   notes?: string;
   doctorName?: string;
   patientName?: string;
-  location: {
+  location?: {
     name?: string;
     address?: Address;
   };
