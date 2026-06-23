@@ -6,6 +6,8 @@ import { Doctor } from "../types/doctor.type";
 import Loading from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { setSummary } from "@/features/appointments/store/appointment-summary.slice";
 
 export default function AllDoctors({
   specialization,
@@ -46,6 +48,9 @@ export default function AllDoctors({
 }
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
+
+    const dispatch = useDispatch();
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-start gap-4">
@@ -98,7 +103,15 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
             </Link>
 
             <Link href={`/appointments/book/${doctor.id}`}>
-              <button className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+              <button
+                onClick={() =>
+                  dispatch(
+                    setSummary({
+                      doctorName: `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`,
+                    })
+                  )
+                }
+                className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
                 Book Appointment
               </button>
             </Link>
