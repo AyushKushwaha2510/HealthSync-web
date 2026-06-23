@@ -182,6 +182,12 @@ export default function Sidebar({
                     ).toLowerCase(),
                   })
                 );
+
+                dispatch(
+                  setSummary({
+                    appointmentDate: format(date, 'dd-MM-yyyy')
+                  })
+                )
               }}
             />
           </CardContent>

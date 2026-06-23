@@ -14,6 +14,7 @@ import { RootState } from '@/store/store';
 import { setCriteria } from '../store/booking-criteria.slice';
 import { useDoctorAvailabilityDetails } from '../hooks/useDoctorAvailabilityDetails';
 import { useEffect } from 'react';
+import { setSummary } from '@/features/appointments/store/appointment-summary.slice';
 
 export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
   const dispatch = useDispatch();
@@ -31,11 +32,6 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
     if (!criteria?.doctorId) return;
     fetchDoctorAvailabilityDetails(criteria);
   }, [doctorId])
-  console.log("pannel ka criterua", criteria)
-
-  useEffect(()=>{
-    console.log('detral', doctorAvailability)
-  }, [fetchDoctorAvailabilityDetails])
 
   return (
     <div className="space-y-6">
@@ -74,14 +70,18 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
                             <button
                               key={index}
                               disabled={occupied}
-                              onClick={() =>
-                                dispatch(
-                                  setCriteria(
-                                    {
-                                      slot,
-                                    }
+                              onClick={() =>{
+                                  dispatch(
+                                    setCriteria({
+                                      slot
+                                    })
                                   )
-                                )
+                                  dispatch(
+                                    setSummary({
+                                      appointmentTime: slot
+                                    })
+                                  )
+                                }
                               }
                               className={`rounded-lg border p-3 text-sm font-medium transition
 
