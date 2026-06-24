@@ -24,6 +24,16 @@ export type Appointment = {
   clinic?: Clinic;
 };
 
+export type BookAppointment = {
+  appointmentDate?: Date;
+  appointmentStartTime?: string;
+  appointmentEndTime?: string;
+  notes?: string;
+  doctor?: Doctor;
+  hospital?: Hospital;
+  clinic?: Clinic;
+};
+
 export type AppointmentSummary = {
   appointmentDate?: string;
   appointmentTime?: string;
