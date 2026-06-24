@@ -8,7 +8,8 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { resetSummary, setSummary } from "@/features/appointments/store/appointment-summary.slice";
-import { setBookingInfo } from "@/features/appointments/store/book-appointment.slice";
+import { resetBookingInfo, setBookingInfo } from "@/features/appointments/store/book-appointment.slice";
+import { removeCriteria } from "@/features/doctors-availability/store/booking-criteria.slice";
 
 export default function AllDoctors({
   specialization,
@@ -108,6 +109,12 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
                 onClick={() => {
                   dispatch(
                     resetSummary()
+                  )
+                  dispatch(
+                    resetBookingInfo()
+                  )
+                  dispatch(
+                    removeCriteria()
                   )
 
                   dispatch(
