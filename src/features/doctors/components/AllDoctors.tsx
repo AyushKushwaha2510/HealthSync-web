@@ -8,6 +8,7 @@ import ErrorMessage from "@/components/ErrorMessage";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { resetSummary, setSummary } from "@/features/appointments/store/appointment-summary.slice";
+import { setBookingInfo } from "@/features/appointments/store/book-appointment.slice";
 
 export default function AllDoctors({
   specialization,
@@ -105,18 +106,24 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
             <Link href={`/appointments/book/${doctor.id}`}>
               <button
                 onClick={() => {
-                    dispatch(
-                      resetSummary()
-                    )
+                  dispatch(
+                    resetSummary()
+                  )
 
-                    dispatch(
-                      setSummary({
-                        doctorName: `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`,
-                        appointmentFee: doctor.appointmentFee,
-                      })
-                    )
-                  }
-                }
+                  dispatch(
+                    setSummary({
+                      doctorName: `Dr. ${doctor.user.firstName} ${doctor.user.lastName}`,
+                      appointmentFee: doctor.appointmentFee,
+                    })
+                  )
+
+                  dispatch(
+                    setBookingInfo({
+                      doctorId: doctor.id
+                    })
+                  )
+                }}
+                
                 className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
                 Book Appointment
               </button>
