@@ -25,7 +25,7 @@ export type Appointment = {
 };
 
 export type BookAppointment = {
-  appointmentDate?: Date;
+  appointmentDate?: string;
   appointmentStartTime?: string;
   appointmentEndTime?: string;
   notes?: string;
