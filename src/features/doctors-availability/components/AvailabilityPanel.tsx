@@ -15,6 +15,7 @@ import { setCriteria } from '../store/booking-criteria.slice';
 import { useDoctorAvailabilityDetails } from '../hooks/useDoctorAvailabilityDetails';
 import { useEffect } from 'react';
 import { setSummary } from '@/features/appointments/store/appointment-summary.slice';
+import { setBookingInfo } from '@/features/appointments/store/book-appointment.slice';
 
 export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
   const dispatch = useDispatch();
@@ -70,23 +71,31 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
                             <button
                               key={index}
                               disabled={occupied}
-                              onClick={() =>{
-                                  dispatch(
-                                    setCriteria({
-                                      slot
-                                    })
-                                  )
-                                  dispatch(
-                                    setSummary({
-                                      appointmentTime: slot
-                                    })
-                                  )
-                                }
-                              }
+                              onClick={() => {
+                                dispatch(
+                                  setCriteria({
+                                    slot
+                                  })
+                                )
+
+                                dispatch(
+                                  setSummary({
+                                    appointmentTime: slot
+                                  })
+                                )
+
+                                dispatch(
+                                  setBookingInfo({
+                                    appointmentStartTime: slot.slice(0, 5),
+                                    appointmentEndTime: slot.slice(6),
+                                  })
+                                )
+                              }}
+                              
                               className={`rounded-lg border p-3 text-sm font-medium transition
 
-                              ${criteria?.slot ===
-                                  slot
+                              ${criteria?.slot === slot
+                                  // && criteria?.weekday === ""
                                   ? 'border-blue-600 bg-blue-600 text-white'
                                   : ''
                                 }

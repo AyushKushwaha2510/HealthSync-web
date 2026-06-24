@@ -26,6 +26,7 @@ import {
 import { Calendar } from '@/components/ui/calendar';
 import { setCriteria } from '../store/booking-criteria.slice';
 import { setSummary } from '@/features/appointments/store/appointment-summary.slice';
+import { setBookingInfo } from '@/features/appointments/store/book-appointment.slice';
 
 type SidebarProps = {
   clinics: Clinic[];
@@ -102,6 +103,16 @@ export default function Sidebar({
                       name: selected.name,
                       address: selected.address
                     }
+                  })
+                )
+
+                dispatch(
+                  setBookingInfo({
+                    hospitalId:
+                      selected.type === 'hospital' ? selected.id : undefined,
+
+                    clinicId:
+                      selected.type === 'clinic' ? selected.id : undefined,
                   })
                 )
               }}
@@ -186,6 +197,12 @@ export default function Sidebar({
                 dispatch(
                   setSummary({
                     appointmentDate: format(date, 'dd-MM-yyyy')
+                  })
+                )
+
+                dispatch(
+                  setBookingInfo({
+                    appointmentDate: date.toISOString()
                   })
                 )
               }}
