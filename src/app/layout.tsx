@@ -4,6 +4,7 @@ import './globals.css';
 import ReduxProvider from '@/providers/redux-provider';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'sonner';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ReduxProvider>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <Toaster />
             <Navbar />
             {children}
           </ThemeProvider>
