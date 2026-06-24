@@ -29,9 +29,9 @@ export type BookAppointment = {
   appointmentStartTime?: string;
   appointmentEndTime?: string;
   notes?: string;
-  doctor?: Doctor;
-  hospital?: Hospital;
-  clinic?: Clinic;
+  doctorId?: string;
+  hospitalId?: string;
+  clinicId?: string;
 };
 
 export type AppointmentSummary = {
