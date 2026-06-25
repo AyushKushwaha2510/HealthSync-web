@@ -5,6 +5,7 @@ import ReduxProvider from '@/providers/redux-provider';
 import Navbar from '@/components/Navbar';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
+import Script from 'next/script';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -31,6 +32,12 @@ export default function RootLayout({
             {children}
           </ThemeProvider>
         </ReduxProvider>
+
+        {/* Razorpay Checkout Script */}
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );
