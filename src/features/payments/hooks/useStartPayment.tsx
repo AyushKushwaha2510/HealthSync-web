@@ -26,7 +26,7 @@ export const useStartPayment = () => {
 
       // Open Razorpay
       const options = {
-        key: process.env.RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         amount: orderData.amount,
         currency: orderData.currency,
         order_id: orderData.id,
@@ -44,6 +44,7 @@ export const useStartPayment = () => {
         },
       };
 
+      console.log("open razorpay", window.Razorpay);
       const razor = new window.Razorpay(options);
       razor.open();
     }
@@ -53,6 +54,9 @@ export const useStartPayment = () => {
         error.response?.data?.message ||
         'Failed to Process Payment Request'
       );
+    }
+    finally {
+      setLoading(false);
     }
   }
 
