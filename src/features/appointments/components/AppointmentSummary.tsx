@@ -7,6 +7,7 @@ import { setBookingInfo } from "../store/book-appointment.slice"
 import { useEffect, useState } from "react"
 import { useStartPayment } from "@/features/payments/hooks/useStartPayment"
 import { handleBook } from "../services/handle-book.service"
+import { setSummary } from "../store/appointment-summary.slice"
 
 export default function AppointmentSummary() {
   const summary = useSelector((state: RootState) => state.appointmentSummary.summary)
@@ -14,6 +15,7 @@ export default function AppointmentSummary() {
 
   const dispatch = useDispatch();
 
+  // save data in localstorage to avoid data-loss upon page-reload
   useEffect(() => {
     if (bookingInfo) {
       localStorage.setItem(
@@ -24,14 +26,27 @@ export default function AppointmentSummary() {
   }, [bookingInfo]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('bookingInfo');
-
-    if (saved) {
-      dispatch(setBookingInfo(JSON.parse(saved)));
+    if (summary) {
+      localStorage.setItem(
+        'summary',
+        JSON.stringify(summary)
+      );
     }
-  }, [dispatch]);
+  }, [summary]);
 
-  console.log('appointmentSummary', summary)
+  // fetch data from localstorage upon page-reload
+  useEffect(() => {
+    const savedInfo = localStorage.getItem('bookingInfo');
+    const savedSummary = localStorage.getItem('summary');
+
+    if (savedInfo) {
+      dispatch(setBookingInfo(JSON.parse(savedInfo)));
+    }
+    if (savedSummary) {
+      dispatch(setSummary(JSON.parse(savedSummary)));
+    }
+  }, []);
+
 
   const { startPayment, loading } = useStartPayment()
 
