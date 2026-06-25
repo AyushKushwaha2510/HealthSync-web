@@ -11,7 +11,6 @@ export const bookAppointment = async (data: BookAppointment) => {
     toast.success('Slot Confirmed', {
       id: toastId,
     });
-    console.log('res', res);
     return res;
   } catch (error: any) {
     console.log(error.response.data);
