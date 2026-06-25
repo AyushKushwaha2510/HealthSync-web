@@ -34,13 +34,14 @@ export const useStartPayment = () => {
         handler: async (response: any) => {
           // Verify payment
           const res = {
+            appointmentId: data.appointmentId,
             externalOrderId: response.razorpay_order_id,
             externalPaymentId: response.razorpay_payment_id,
             externalSignature: response.razorpay_signature,
           }
 
-          await verifySignatureApi(res)
-
+          const ans = await verifySignatureApi(res)
+          console.log('ans', ans)
         },
       };
 
