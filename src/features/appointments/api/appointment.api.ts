@@ -10,3 +10,8 @@ export const bookAppointmentsApi = async (data: BookAppointment) => {
   const res = await api.post('/appointments', data);
   return res.data;
 };
+
+export const getOneAppointmentByIdApi = async (id: string) => {
+  const res = await api.get(`/appointments/${id}`);
+  return res.data;
+};

@@ -15,7 +15,9 @@ export enum AppointmentStatus {
 
 export type Appointment = {
   id: string;
-  appointmentDateTime: Date;
+  date: string;
+  startTime: string;
+  endTime: string;
   status: AppointmentStatus;
   notes: string;
   doctor: Doctor;
