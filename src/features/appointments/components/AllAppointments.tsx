@@ -5,6 +5,7 @@ import { useAllAppointments } from "../hooks/useAllAppointments";
 import Loading from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { AppointmentStatus } from "../types/appointment.type";
+import { useRouter } from "next/navigation";
 
 export default function AllAppointments() {
   const { fetchAllAppointments, appointments, loading, error, success } = useAllAppointments();
@@ -12,6 +13,8 @@ export default function AllAppointments() {
   useEffect(() => {
     fetchAllAppointments();
   }, [])
+
+  const router = useRouter();
 
   if (loading) return <Loading message="Loading..." />
   if (error) return <ErrorMessage message={error} />
@@ -63,6 +66,9 @@ export default function AllAppointments() {
               {appointments?.map((appointment) => (
                 <tr
                   key={appointment.id}
+                  onClick={() =>
+                    router.push(`/doctors/appointments/${appointment.id}`)
+                  }
                   className="border-b transition-colors hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
                 >
                   <td className="px-4 py-4">
@@ -91,24 +97,24 @@ export default function AllAppointments() {
 
                   <td className="px-4 py-4 text-slate-600 dark:text-slate-300">
                     {new Date(
-                      appointment.appointmentDateTime
-                    ).toLocaleString()}
+                      (appointment.date)
+                    ).toDateString()}
                   </td>
 
                   <td className="px-4 py-4">
                     <span
                       className={`inline-flex rounded-full px-3 py-1 text-xs font-medium ${appointment.status === AppointmentStatus.CONFIRMED
-                          ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300'
+                        ? 'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-300'
+                        : appointment.status ===
+                          AppointmentStatus.COMPLETED
+                          ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
                           : appointment.status ===
-                            AppointmentStatus.COMPLETED
-                            ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300'
+                            AppointmentStatus.CANCELLED
+                            ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
                             : appointment.status ===
-                              AppointmentStatus.CANCELLED
-                              ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
-                              : appointment.status ===
-                                AppointmentStatus.EXPIRED
-                                ? 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200'
-                                : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
+                              AppointmentStatus.EXPIRED
+                              ? 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200'
+                              : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300'
                         }`}
                     >
                       {appointment.status
