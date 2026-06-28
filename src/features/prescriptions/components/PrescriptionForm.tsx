@@ -2,18 +2,18 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Pill, Plus, Trash2, NotebookPen, FileCheck, Stethoscope } from "lucide-react";
+import { Pill, Plus, NotebookPen, FileCheck, Stethoscope } from "lucide-react";
 
 import { usePrescriptionForm } from "../hooks/usePrescriptionForm";
 import { MedicineCard } from "./MedicineCard";
 import { PrescriptionNotes } from "./PrescriptionNotes";
 
-export default function PrescriptionForm() {
+export default function PrescriptionForm({ appointmentId }: { appointmentId: string }) {
   const {
     form,
+    setForm,
+    handleSubmit,
+    loading,
     addMedicine,
     removeMedicine,
     updateMedicine,
@@ -24,7 +24,9 @@ export default function PrescriptionForm() {
   } = usePrescriptionForm();
 
   return (
-    <div className="mx-auto max-w-6xl space-y-8">
+    <form
+      onSubmit={handleSubmit}
+      className="mx-auto max-w-6xl space-y-8">
 
       {/* Header */}
 
@@ -56,7 +58,10 @@ export default function PrescriptionForm() {
               <CardTitle>Medicines</CardTitle>
             </div>
 
-            <Button onClick={addMedicine}>
+            <Button
+              type="button"
+              onClick={addMedicine}
+            >
               <Plus className="mr-2 h-4 w-4" />
               Add Medicine
             </Button>
@@ -94,7 +99,11 @@ export default function PrescriptionForm() {
               <CardTitle>General Prescription Notes</CardTitle>
             </div>
 
-            <Button variant="outline" onClick={addNote}>
+            <Button
+              type="button" 
+              variant="outline"
+              onClick={addNote}
+            >
               <Plus className="mr-2 h-4 w-4" />
               Add Note
             </Button>
@@ -123,13 +132,22 @@ export default function PrescriptionForm() {
           Cancel
         </Button>
 
-        <Button>
+        <Button
+          type="submit"
+          disabled={loading}
+          onClick={() =>
+            setForm(prev => ({
+              ...prev,
+              appointmentId
+            }))
+          }
+        >
           <FileCheck className="mr-2 h-4 w-4" />
           Save Prescription
         </Button>
       </div>
 
-    </div>
+    </form>
   );
 }
 
