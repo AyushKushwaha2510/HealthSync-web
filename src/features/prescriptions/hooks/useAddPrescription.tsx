@@ -1,31 +1,36 @@
 import { useState } from "react"
 import { AddPrescription } from "../types/prescription.type";
 import { addPrescriptionApi } from "../api/prescription.api";
+import { toast } from "sonner";
 
-export const UseAddPrescription = () => {
+export const useAddPrescription = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const addPrescription = async (data: AddPrescription) => {
+    const toastId = toast.loading('Adding Prescription')
     try {
       setLoading(true);
-      setError(null);
-      setSuccess(null);
 
-      const res = await addPrescriptionApi(data);
+      await addPrescriptionApi(data);
 
-      setSuccess(res.message);
-    } 
+      toast.success('Prescription Added', {
+        id: toastId
+      })
+    }
     catch (error: any) {
-      setSuccess(null);
-      console.log("error", error.response)
-      setError(error.response.data);
-    } 
+      toast.error(
+        error.response.data.message
+        || 'Error Adding Prescription',
+        {
+          id: toastId
+        }
+      )
+      console.log("error", error.response.data.message)
+    }
     finally {
       setLoading(false);
     }
   }
 
-  return { addPrescription, loading, error, success }
+  return { addPrescription, loading }
 }
