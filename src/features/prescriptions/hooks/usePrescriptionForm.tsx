@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, SyntheticEvent } from "react";
 import { AddPrescription } from "../types/prescription.type";
+import { useAddPrescription } from "./useAddPrescription";
 
 export function usePrescriptionForm() {
+  const { addPrescription, loading } = useAddPrescription();
 
   const [form, setForm] = useState<AddPrescription>({
     appointmentId: "",
@@ -11,6 +13,11 @@ export function usePrescriptionForm() {
 
   const handleChange = (updates: Partial<AddPrescription>) => {
     setForm((prev) => ({ ...prev, ...updates }));
+  };
+
+  const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await addPrescription(form);
   };
 
   const addMedicine = () => {
@@ -71,6 +78,8 @@ export function usePrescriptionForm() {
   return {
     form,
     setForm,
+    loading,
+    handleSubmit,
     handleChange,
     addMedicine,
     updateMedicine,
