@@ -7,6 +7,8 @@ export function usePrescriptionForm() {
 
   const [form, setForm] = useState<AddPrescription>({
     appointmentId: "",
+    symptoms: [],
+    diseases: [],
     medicines: [],
     notes: [],
   });
@@ -19,6 +21,64 @@ export function usePrescriptionForm() {
     e.preventDefault();
     await addPrescription(form);
   };
+
+  const addSymptom = () => {
+    setForm((prev) => ({
+      ...prev,
+      symptoms: [
+        ...(prev.symptoms ?? []),
+        ""
+      ]
+    }))
+  }
+
+  const updateSymptom = (index: number, value: string) => {
+    setForm((prev) => {
+      const updated = [...(prev.symptoms ?? [])];
+      updated[index] = value;
+
+      return {
+        ...prev,
+        symptoms: updated,
+      };
+    });
+  }
+
+  const removeSymptom = (index: number) => {
+    setForm((prev) => ({
+      ...prev,
+      symptoms: (prev.symptoms ?? []).filter((_, i) => i !== index)
+    }))
+  }
+
+  const addDisease = () => {
+    setForm((prev) => ({
+      ...prev,
+      diseases: [
+        ...(prev.diseases ?? []),
+        ""
+      ]
+    }))
+  }
+
+  const updateDisease = (index: number, value: string) => {
+    setForm((prev) => {
+      const updated = [...(prev.diseases ?? [])];
+      updated[index] = value;
+
+      return {
+        ...prev,
+        diseases: updated,
+      };
+    });
+  }
+
+  const removeDisease = (index: number) => {
+    setForm((prev) => ({
+      ...prev,
+      diseases: (prev.diseases ?? []).filter((_, i) => i !== index)
+    }))
+  }
 
   const addMedicine = () => {
     setForm((prev) => ({
@@ -78,12 +138,23 @@ export function usePrescriptionForm() {
   return {
     form,
     setForm,
+
     loading,
     handleSubmit,
     handleChange,
+
+    addSymptom,
+    updateSymptom,
+    removeSymptom,
+
+    addDisease,
+    updateDisease,
+    removeDisease,
+
     addMedicine,
     updateMedicine,
     removeMedicine,
+
     addNote,
     updateNote,
     removeNote

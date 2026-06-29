@@ -36,6 +36,7 @@ export function MedicineCard({
           </CardTitle>
 
           <Button
+            type="button"
             variant="ghost"
             size="icon"
             onClick={onRemove}
