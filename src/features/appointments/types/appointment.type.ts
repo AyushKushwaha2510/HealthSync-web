@@ -3,6 +3,7 @@ import { WeekDays } from '@/features/doctors-availability/types/weekday.enum';
 import { Doctor } from '@/features/doctors/types/doctor.type';
 import { Hospital } from '@/features/hospitals/types/hospital.type';
 import { Patinet } from '@/features/patients/types/patient';
+import { Prescription } from '@/features/prescriptions/types/prescription.type';
 import { Address } from '@/types/address.type';
 
 export enum AppointmentStatus {
@@ -24,6 +25,7 @@ export type Appointment = {
   patient: Patinet;
   hospital?: Hospital;
   clinic?: Clinic;
+  prescription?: Prescription;
 };
 
 export type BookAppointment = {

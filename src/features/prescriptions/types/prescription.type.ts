@@ -8,6 +8,10 @@ export type AddPrescription = {
   notes?: string[];
 };
 
+export interface UpdatePrescription extends AddPrescription {
+  id: string;
+}
+
 export interface Prescription extends AddPrescription {
   id: string;
   appointment: Partial<Appointment>;
