@@ -4,7 +4,6 @@ import NotesCard from "./NotesCard";
 import PatientCard from "./PatientCard";
 import StatsCards from "./StatsCards";
 import { getAppointmentInfo } from "../services/getAppointmentInfo";
-import AppointmentActions from "./ActionButtons";
 
 export default async function AppointmentDetails({
   id,
@@ -25,8 +24,6 @@ export default async function AppointmentDetails({
       </div>
 
       <NotesCard notes={appointment.notes} />
-
-      <AppointmentActions appointmentId={appointment.id} />
     </div>
   );
 }
