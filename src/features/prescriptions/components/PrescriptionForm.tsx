@@ -2,18 +2,32 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Pill, Plus, NotebookPen, FileCheck, Stethoscope } from "lucide-react";
+import { Pill, Plus, NotebookPen, FileCheck, Stethoscope, ShieldPlus } from "lucide-react";
 
 import { usePrescriptionForm } from "../hooks/usePrescriptionForm";
 import { MedicineCard } from "./MedicineCard";
 import { PrescriptionNotes } from "./PrescriptionNotes";
+import { Symptoms } from "./Symptoms";
+import { Diseases } from "./Diseases";
+import { useEffect } from "react";
 
 export default function PrescriptionForm({ appointmentId }: { appointmentId: string }) {
+
   const {
     form,
     setForm,
+
     handleSubmit,
     loading,
+
+    addSymptom,
+    updateSymptom,
+    removeSymptom,
+
+    addDisease,
+    updateDisease,
+    removeDisease,
+
     addMedicine,
     removeMedicine,
     updateMedicine,
@@ -23,13 +37,19 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
     removeNote,
   } = usePrescriptionForm();
 
+  useEffect(() => {
+    setForm(prev => ({
+      ...prev,
+      appointmentId,
+    }));
+  }, [appointmentId]);
+
   return (
     <form
       onSubmit={handleSubmit}
       className="mx-auto max-w-6xl space-y-8">
 
       {/* Header */}
-
       <Card className="rounded-2xl border-blue-200 dark:border-blue-900">
         <CardHeader>
           <div className="flex items-center gap-3">
@@ -48,8 +68,83 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
         </CardHeader>
       </Card>
 
-      {/* Medicines */}
+      {/* Symptoms */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Stethoscope className="h-5 w-5 text-blue-600" />
+              <CardTitle>Symptoms</CardTitle>
+            </div>
 
+            <Button
+              type="button"
+              onClick={addSymptom}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Add Symptom
+            </Button>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {form.symptoms?.length === 0 && (
+            <div className="rounded-xl border border-dashed p-10 text-center text-muted-foreground">
+              No Symptoms added yet.
+            </div>
+          )}
+
+          {form.symptoms?.map((symptom, index) => (
+            <Symptoms
+              key={index}
+              index={index}
+              symptom={symptom}
+              onRemove={() => removeSymptom(index)}
+              onChange={(value) => updateSymptom(index, value)}
+            />
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Diseases */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ShieldPlus className="h-5 w-5 text-blue-600" />
+              <CardTitle>Diseases</CardTitle>
+            </div>
+
+            <Button
+              type="button"
+              onClick={addDisease}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Add Disease
+            </Button>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {form.diseases?.length === 0 && (
+            <div className="rounded-xl border border-dashed p-10 text-center text-muted-foreground">
+              No Disease added yet.
+            </div>
+          )}
+
+          {form.diseases?.map((disease, index) => (
+            <Diseases
+              key={index}
+              index={index}
+              disease={disease}
+              onRemove={() => removeDisease(index)}
+              onChange={(value) => updateDisease(index, value)}
+            />
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Medicines */}
       <Card className="rounded-2xl">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -80,7 +175,10 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
               key={index}
               index={index}
               medicine={medicine}
-              onRemove={() => removeMedicine(index)}
+              onRemove={() => {
+                console.log("deleted btn clicked")
+                removeMedicine(index)
+              }}
               onChange={(field, value) =>
                 updateMedicine(index, field, value)
               }
@@ -90,7 +188,6 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
       </Card>
 
       {/* General Notes */}
-
       <Card className="rounded-2xl">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -100,7 +197,7 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
             </div>
 
             <Button
-              type="button" 
+              type="button"
               variant="outline"
               onClick={addNote}
             >
@@ -126,21 +223,17 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
       </Card>
 
       {/* Footer */}
-
       <div className="flex justify-end gap-4">
-        <Button variant="outline">
+        <Button
+          type="button"
+          variant="outline"
+        >
           Cancel
         </Button>
 
         <Button
           type="submit"
           disabled={loading}
-          onClick={() =>
-            setForm(prev => ({
-              ...prev,
-              appointmentId
-            }))
-          }
         >
           <FileCheck className="mr-2 h-4 w-4" />
           Save Prescription
