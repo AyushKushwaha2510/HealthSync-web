@@ -7,7 +7,9 @@ export const useAddPrescription = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const addPrescription = async (data: AddPrescription) => {
+    
     const toastId = toast.loading('Adding Prescription')
+
     try {
       setLoading(true);
 
@@ -25,7 +27,6 @@ export const useAddPrescription = () => {
           id: toastId
         }
       )
-      console.log("error", error.response.data.message)
     }
     finally {
       setLoading(false);
