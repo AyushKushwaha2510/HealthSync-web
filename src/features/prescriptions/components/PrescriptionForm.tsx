@@ -10,14 +10,22 @@ import { PrescriptionNotes } from "./PrescriptionNotes";
 import { Symptoms } from "./Symptoms";
 import { Diseases } from "./Diseases";
 import { useEffect } from "react";
+import { Prescription } from "../types/prescription.type";
 
-export default function PrescriptionForm({ appointmentId }: { appointmentId: string }) {
+export default function PrescriptionForm({
+  appointmentId,
+  prescription
+}: {
+  appointmentId: string,
+  prescription?: Prescription
+}) {
 
   const {
     form,
     setForm,
 
     handleSubmit,
+    handleUpdate,
     loading,
 
     addSymptom,
@@ -37,6 +45,7 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
     removeNote,
   } = usePrescriptionForm();
 
+  // set appointmentId to prescription
   useEffect(() => {
     setForm(prev => ({
       ...prev,
@@ -44,9 +53,22 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
     }));
   }, [appointmentId]);
 
+  // if prescription exists then setForm
+  useEffect(() => {
+    if (!prescription) return;
+
+    setForm({
+      ...prescription
+    })
+  }, [prescription])
+
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={
+        prescription
+          ? handleUpdate
+          : handleSubmit
+      }
       className="mx-auto max-w-6xl space-y-8">
 
       {/* Header */}
@@ -175,10 +197,7 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
               key={index}
               index={index}
               medicine={medicine}
-              onRemove={() => {
-                console.log("deleted btn clicked")
-                removeMedicine(index)
-              }}
+              onRemove={() => removeMedicine(index)}
               onChange={(field, value) =>
                 updateMedicine(index, field, value)
               }
@@ -236,7 +255,7 @@ export default function PrescriptionForm({ appointmentId }: { appointmentId: str
           disabled={loading}
         >
           <FileCheck className="mr-2 h-4 w-4" />
-          Save Prescription
+          {prescription ? 'Update Prescription' : 'Save Prescription'}
         </Button>
       </div>
 
