@@ -2,6 +2,8 @@ import { Appointment } from '@/features/appointments/types/appointment.type';
 
 export type AddPrescription = {
   appointmentId: string;
+  symptoms?: string[];
+  diseases?: string[];
   medicines?: Medicine[];
   notes?: string[];
 };
