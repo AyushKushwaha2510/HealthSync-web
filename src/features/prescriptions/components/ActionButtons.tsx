@@ -13,7 +13,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-export default function AppointmentActions({
+export default function PrescriptionActions({
   appointmentId,
 }: {
   appointmentId: string;
