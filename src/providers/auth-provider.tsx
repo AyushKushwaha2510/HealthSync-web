@@ -13,19 +13,14 @@ export function AuthProvider({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if (!token) return;
-
     const loadUser = async () => {
       try {
         const user = await getMeApi();
 
         dispatch(setUser(user));
-        
+
       } catch (err) {
         console.log(err);
-        localStorage.removeItem('token');
       }
     };
 
