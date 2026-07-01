@@ -16,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from './ui/button';
 import ThemeToggle from './ToogleTheme';
 import { Role } from '@/features/auth/types/user.type';
+import { logoutApi } from '@/features/auth/api/auth.api';
 
 export default function Navbar() {
 
@@ -26,11 +27,14 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+  const handleLogout = async () => {
+    try {
+      await logoutApi(); // clears cookie on backend
+    } catch (err) {
+      console.log(err);
+    }
 
     dispatch(logout());
-
     router.push('/login');
   };
 
