@@ -6,18 +6,18 @@ const api = axios.create({
 });
 
 //  request interceptor (for token later)
-api.interceptors.request.use((config) => {
-  if (typeof window !== 'undefined') {
-    const token = localStorage.getItem('token');
+// api.interceptors.request.use((config) => {
+//   if (typeof window !== 'undefined') {
+//     const token = localStorage.getItem('token');
 
-    if (token) {
-      config.headers = config.headers ?? {};
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-  }
+//     if (token) {
+//       config.headers = config.headers ?? {};
+//       config.headers.Authorization = `Bearer ${token}`;
+//     }
+//   }
 
-  return config;
-});
+//   return config;
+// });
 
 // Optional: response interceptor (global error handling)
 api.interceptors.response.use(
