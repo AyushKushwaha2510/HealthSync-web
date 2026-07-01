@@ -21,8 +21,8 @@ export const useLogin = () => {
 
       // Note: Since loginApi already returns `axiosRes.data`, 
       // your token is likely `res.accessToken` or `res.data.accessToken` depending on your backend.
-      const token = res.data?.accessToken || res.accessToken;
-      localStorage.setItem('token', token);
+      // const token = res.data?.accessToken || res.accessToken;
+      // localStorage.setItem('token', token);
 
       // 2. Immediately fetch the full user profile! 
       // This solves the "missing data until refresh" bug.
