@@ -6,12 +6,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Prescription } from "../types/prescription.type";
 import { formatDate, formatTime } from "@/helpers/date-time";
+import { downloadPrescriptionApi } from "../api/prescription.api";
 
 export default function PrescriptionHistory({
   history,
 }: {
   history: Prescription[];
 }) {
+  console.log('pres', history)
   return (
     <DropdownMenuContent className="w-96 p-2">
       <DropdownMenuLabel>Prescription History</DropdownMenuLabel>
@@ -51,7 +53,7 @@ export default function PrescriptionHistory({
                 <Button
                   size="sm"
                   variant="outline"
-                  onClick={() => console.log(prescription.id)}
+                  onClick={() => downloadPrescriptionApi(prescription.appointment.id ?? '')}
                 >
                   View
                 </Button>
