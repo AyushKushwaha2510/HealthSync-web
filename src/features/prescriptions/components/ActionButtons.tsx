@@ -1,7 +1,6 @@
-'use client';
+'use client'
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import {
   Ban,
@@ -11,14 +10,22 @@ import {
   Trash2,
 } from "lucide-react";
 
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 import { Button } from "@/components/ui/button";
+import PrescriptionHistory from "./PrescriptionHistory";
+import { Prescription } from "../types/prescription.type";
 
 export default function PrescriptionActions({
   appointmentId,
+  history
 }: {
   appointmentId: string;
+  history: Prescription[]
 }) {
-  const router = useRouter();
 
   const handleCancel = async () => {
     // TODO:
@@ -36,12 +43,14 @@ export default function PrescriptionActions({
 
   return (
     <div className="flex flex-wrap justify-end gap-3">
-      <Button asChild>
-        <Link href={`/prescriptions/create?appointmentId=${appointmentId}`}>
-          <ClipboardPlus className="mr-2 h-4 w-4" />
-          Add Prescription
-        </Link>
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline">History</Button>
+        </DropdownMenuTrigger>
+        <PrescriptionHistory
+          history={history}
+        />
+      </DropdownMenu>
 
       <Button variant="outline" asChild>
         <Link href={`/appointments/${appointmentId}/edit`}>
