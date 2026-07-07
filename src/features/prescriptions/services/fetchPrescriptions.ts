@@ -20,6 +20,8 @@ export const getAllPrescriptionsSSR = async (
 ) => {
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;
+  console.log("ALL COOKIES");
+  console.log(cookieStore.getAll());
   const res = await api.get('/prescriptions', {
     params: {
       doctorId,
