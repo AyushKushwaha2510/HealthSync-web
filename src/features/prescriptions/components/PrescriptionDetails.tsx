@@ -10,14 +10,18 @@ export default async function PrescriptionDetails({
 }) {
   const appointment = await getAppointmentInfo(appointmentId);
   const prescription = appointment.prescription;
-  
-  const history = await getAllPrescriptionsSSR(appointment.doctor.id, appointment.patient.id)
 
+  // const history = await getAllPrescriptionsSSR(appointment.doctor.id, appointment.patient.id)
+
+  const doctorId = appointment.doctor.id
+  const patientId = appointment.patient.id
+  
   return (
     <div className="space-y-5">
       <PrescriptionActions
         appointmentId={appointmentId}
-        history={history}
+        doctorId={doctorId}
+        patientId={patientId}
       />
 
       <PrescriptionForm
