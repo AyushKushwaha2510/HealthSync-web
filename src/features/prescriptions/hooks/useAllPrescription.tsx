@@ -6,7 +6,7 @@ export const useAllPrescription = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [prescriptions, setPrescriptions] = useState<Partial<Prescription[] | null>>(null)
 
-  const fetchAllPrescription = async (doctorId: string, patientId: string) => {
+  const fetchAllPrescription = async (doctorId?: string, patientId?: string) => {
 
     try {
       setLoading(true);

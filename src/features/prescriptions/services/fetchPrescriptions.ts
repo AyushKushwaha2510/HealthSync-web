@@ -7,16 +7,16 @@ import { Prescription } from '../types/prescription.type';
 import { cookies } from 'next/headers';
 
 export const getAllPrescriptions = async (
-  doctorId: string,
-  patientId: string,
+  doctorId?: string,
+  patientId?: string,
 ): Promise<Prescription[]> => {
   const res = await getAllPrescriptionsApi(doctorId, patientId);
   return res;
 };
 
 export const getAllPrescriptionsSSR = async (
-  doctorId: string,
-  patientId: string,
+  doctorId?: string,
+  patientId?: string,
 ): Promise<Prescription[]> => {
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;

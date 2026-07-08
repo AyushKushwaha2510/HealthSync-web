@@ -5,8 +5,8 @@ import {
 } from '../types/prescription.type';
 
 export const getAllPrescriptionsApi = async (
-  doctorId: string,
-  patientId: string,
+  doctorId?: string,
+  patientId?: string,
 ) => {
   const res = await api.get('/prescriptions', {
     params: {
