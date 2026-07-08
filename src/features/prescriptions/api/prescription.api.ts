@@ -40,3 +40,10 @@ export const downloadPrescriptionApi = async (appointmentId: string) => {
     '_blank',
   );
 };
+
+export const analyzePrescriptionApi = async (prescriptionId: string) => {
+  const res = await api.post('/analyze/prescription', {
+    prescriptionId,
+  });
+  return res.data;
+};
