@@ -24,3 +24,18 @@ export type Medicine = {
   duration: string;
   note?: string;
 };
+
+export type MedicineAnalysis = {
+  name: string;
+  purpose: string;
+  dosage: string;
+  precautions: string[];
+  side_effects: string[];
+};
+
+export type PrescriptionAnalysis = {
+  summary: string;
+  medicines: MedicineAnalysis[];
+  warnings: string[];
+  recommendations: string[];
+};
