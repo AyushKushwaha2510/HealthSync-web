@@ -33,6 +33,10 @@ const tabs = [
     path: '/patients/appointments',
   },
   {
+    label: 'Prescriptions',
+    path: '/patients/prescriptions',
+  },
+  {
     label: 'Report a Bug',
     path: '/dashboard/bug',
   },
