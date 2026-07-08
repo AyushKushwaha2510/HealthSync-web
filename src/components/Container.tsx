@@ -11,7 +11,7 @@ export default function Container({
 }: ContainerProps) {
   return (
     <div
-      className={`${centered ? 'mx-auto' : ''} w-full max-w-[100rem] mt-25 p-2 ${className}`}
+      className={`${centered ? 'flex items-center justify-center' : ''} w-full max-w-[100rem] mt-25 p-2 ${className}`}
     >
       {children}
     </div>
