@@ -18,14 +18,28 @@ import {
 import { Button } from "@/components/ui/button";
 import PrescriptionHistory from "./PrescriptionHistory";
 import { Prescription } from "../types/prescription.type";
+import { useAllPrescription } from "../hooks/useAllPrescription";
+import { useEffect } from "react";
 
 export default function PrescriptionActions({
   appointmentId,
-  history
+  doctorId,
+  patientId,
 }: {
   appointmentId: string;
-  history: Prescription[]
+  doctorId: string,
+  patientId: string,
 }) {
+
+  const { fetchAllPrescription, prescriptions, loading } = useAllPrescription();
+
+  useEffect(() => {
+    fetchAllPrescription(doctorId, patientId)
+  }, [doctorId, patientId])
+
+  const history = (prescriptions ?? []).filter(
+    (p): p is Prescription => p !== undefined
+  );
 
   const handleCancel = async () => {
     // TODO:
@@ -47,9 +61,12 @@ export default function PrescriptionActions({
         <DropdownMenuTrigger asChild>
           <Button variant="outline">History</Button>
         </DropdownMenuTrigger>
-        <PrescriptionHistory
-          history={history}
-        />
+
+        {loading ? "Loading..."
+          : <PrescriptionHistory
+            history={history}
+          />
+        }
       </DropdownMenu>
 
       <Button variant="outline" asChild>
