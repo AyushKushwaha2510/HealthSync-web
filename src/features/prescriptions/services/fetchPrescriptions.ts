@@ -17,11 +17,10 @@ export const getAllPrescriptions = async (
 export const getAllPrescriptionsSSR = async (
   doctorId: string,
   patientId: string,
-) => {
+): Promise<Prescription[]> => {
   const cookieStore = await cookies();
   const token = cookieStore.get('accessToken')?.value;
-  console.log("ALL COOKIES");
-  console.log(cookieStore.getAll());
+
   const res = await api.get('/prescriptions', {
     params: {
       doctorId,
