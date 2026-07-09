@@ -3,8 +3,8 @@ import AllPrescription from "@/features/prescriptions/components/patient-view/Al
 
 export default function Page(){
   return (
-    <Container>
+    // <Container>
       <AllPrescription/>
-    </Container>
+    // </Container>
   )
 }

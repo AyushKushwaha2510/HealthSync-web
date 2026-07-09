@@ -31,7 +31,7 @@ export default function AllPrescription() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl p-6">
+    <div className="mx-auto max-w-7xl p-6">
       <h1 className="mb-6 text-2xl font-bold">Prescription History</h1>
 
       {prescriptions.length === 0 ? (
@@ -39,7 +39,7 @@ export default function AllPrescription() {
           No prescriptions found.
         </div>
       ) : (
-        <div className="overflow-hidden rounded-lg border">
+        <div className="overflow-hidden rounded-lg border flex flex-row gap-5">
           <table className="w-full">
             <thead className="border-b bg-muted/50">
               <tr>
@@ -108,19 +108,19 @@ export default function AllPrescription() {
             </tbody>
           </table>
 
-          <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>AI Prescription Analysis</DialogTitle>
-              </DialogHeader>
+          <div hidden={!open}>
+            <div className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <h3>
+                <p>AI Prescription Analysis</p>
+              </h3>
 
               {selectedPrescriptionId && (
                 <AnalyzePrescription
                   prescriptionId={selectedPrescriptionId}
                 />
               )}
-            </DialogContent>
-          </Dialog>
+            </div>
+          </div>
         </div>
       )}
     </div>
