@@ -1,6 +1,7 @@
 import api from '@/lib/axios';
 import {
   AddPrescription,
+  PrescriptionAnalysis,
   UpdatePrescription,
 } from '../types/prescription.type';
 
@@ -41,7 +42,9 @@ export const downloadPrescriptionApi = async (appointmentId: string) => {
   );
 };
 
-export const analyzePrescriptionApi = async (prescriptionId: string) => {
+export const analyzePrescriptionApi = async (
+  prescriptionId: string,
+): Promise<PrescriptionAnalysis> => {
   const res = await api.post('/analyze/prescription', {
     prescriptionId,
   });
