@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button';
 import { formatDate, formatTime } from '@/helpers/date-time';
 import { downloadPrescriptionApi } from '../../api/prescription.api';
 import AnalyzePrescription from './analyze';
-import Chat from '@/features/chatbot/components/Chat';
-import ChatPage from '@/features/chatbot/components/ChatPage';
+import ChatBot from '@/features/chatbot/components/ChatBot';
 
 export default function AllPrescription() {
   const { fetchAllPrescription, prescriptions, loading } =
@@ -117,10 +116,12 @@ export default function AllPrescription() {
 
               {selectedPrescriptionId && (
                 <>
-                  <AnalyzePrescription
+                  {/* <AnalyzePrescription
+                    prescriptionId={selectedPrescriptionId}
+                  /> */}
+                  <ChatBot
                     prescriptionId={selectedPrescriptionId}
                   />
-                  <ChatPage />
                 </>
               )}
             </div>
