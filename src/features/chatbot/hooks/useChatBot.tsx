@@ -1,13 +1,13 @@
 import { useState } from "react"
 import { ChatBlockType, ChatMessage } from "../types/chat.type"
-import api from "@/lib/axios";
 import { analyzePrescriptionApi } from "@/features/prescriptions/api/prescription.api";
+import { sendMessageApi } from "../api/chatbot.api";
 
 export const useChatBot = () => {
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: crypto.randomUUID(),
+      id: 'welcome', // randomUUID() was causing hydration issue
       role: "assistant",
       block: {
         type: ChatBlockType.TEXT,
@@ -22,6 +22,7 @@ export const useChatBot = () => {
 
   // function to call backend for initial analsyis of prescId
   const analyzePrescription = async (prescId: string) => {
+    setError(null)
     setThinking(true);
 
     // Call the API
@@ -48,22 +49,52 @@ export const useChatBot = () => {
     ])
   }
 
-  const handleSend = (text: string) => {
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        role: "user",
-        block: {
-          type: ChatBlockType.TEXT,
-          content: text,
-        },
-      },
-    ]);
+  const handleSend = async (text: string) => {
+    setError(null)
+    setThinking(true)
 
-    // Later:
-    // Call backend
-    // Stream assistant response
+    try {
+      // add message
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: "user",
+          block: {
+            type: ChatBlockType.TEXT,
+            content: text,
+          },
+        },
+      ]);
+
+      // send message
+      const req = {
+        id: crypto.randomUUID(),
+        message: text
+      }
+
+      const res = await sendMessageApi(req);
+
+      // add to assistant message
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: "assistant",
+          block: {
+            type: ChatBlockType.TEXT,
+            content: res,
+          },
+        },
+      ])
+
+    } catch (error: any) {
+      setError(error.response.data.message)
+
+    } finally {
+      setThinking(false);
+    }
+
   };
 
   const handleUpload = (file: File) => {
