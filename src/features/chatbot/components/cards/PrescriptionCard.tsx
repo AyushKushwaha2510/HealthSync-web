@@ -23,7 +23,7 @@ export function PrescriptionCard({
   if (!analysis) return <p>Unable to Analyise</p>
 
   return (
-    <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-2 min-w-2xl">
+    <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-2">
 
       {/* Summary */}
       <Card>
