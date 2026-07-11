@@ -18,7 +18,12 @@ export function ChatMessage({
 }: ChatMessageProps) {
 
   return (
-    <Message className={cn(message.role === "user" && "flex-row-reverse")}>
+    <Message
+      className={cn(
+        "w-full",
+        message.role === "user" ? "justify-end" : "justify-start"
+      )}
+    >
       {/* {message.role === "assistant" && (
         <MessageAvatar
           src="/logo.png"
@@ -26,7 +31,12 @@ export function ChatMessage({
         />
       )} */}
 
-      <MessageContent className="max-w-[90%] lg:max-w-[75%]">
+      <MessageContent
+        className={cn(
+          "max-w-[90%] lg:max-w-[75%]",
+          message.role === "user" && "items-end text-right"
+        )}
+      >
         <Bubble
           className={cn(
             "rounded-3xl border",
@@ -35,7 +45,11 @@ export function ChatMessage({
               : "bg-background"
           )}
         >
-          <BubbleContent>
+          <BubbleContent
+            className={cn(
+              message.role === "user" && "text-right",
+            )}
+          >
             <MessageRenderer block={message.block} />
           </BubbleContent>
         </Bubble>
