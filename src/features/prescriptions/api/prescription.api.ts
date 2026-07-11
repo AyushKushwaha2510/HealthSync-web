@@ -45,7 +45,7 @@ export const downloadPrescriptionApi = async (appointmentId: string) => {
 export const analyzePrescriptionApi = async (
   prescriptionId: string,
 ): Promise<PrescriptionAnalysis> => {
-  const res = await api.post('/analyze/prescription', {
+  const res = await api.post('ai/analyze/prescription', {
     prescriptionId,
   });
   return res.data;
