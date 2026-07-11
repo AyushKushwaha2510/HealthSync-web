@@ -7,6 +7,7 @@ import { formatDate, formatTime } from '@/helpers/date-time';
 import { downloadPrescriptionApi } from '../../api/prescription.api';
 import AnalyzePrescription from './analyze';
 import ChatBot from '@/features/chatbot/components/ChatBot';
+import { useRouter } from 'next/navigation';
 
 export default function AllPrescription() {
   const { fetchAllPrescription, prescriptions, loading } =
@@ -18,6 +19,8 @@ export default function AllPrescription() {
 
   const [selectedPrescriptionId, setSelectedPrescriptionId] = useState<string | null>(null);
   const [open, setOpen] = useState<boolean>(false);
+
+  const router = useRouter();
 
   if (loading) {
     return (
@@ -96,6 +99,7 @@ export default function AllPrescription() {
                       onClick={() => {
                         if (prescription?.id) {
                           setSelectedPrescriptionId(prescription.id);
+                          router.push(`/chatbot?prescId=${prescription.id}`)
                           setOpen(true);
                         }
                       }}
@@ -119,9 +123,9 @@ export default function AllPrescription() {
                   {/* <AnalyzePrescription
                     prescriptionId={selectedPrescriptionId}
                   /> */}
-                  <ChatBot
+                  {/* <ChatBot
                     prescriptionId={selectedPrescriptionId}
-                  />
+                  /> */}
                 </>
               )}
             </div>
