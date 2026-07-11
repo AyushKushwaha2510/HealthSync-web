@@ -25,7 +25,7 @@ export function Chat({
   error
 }: ChatProps) {
   return (
-    <div className="flex h-full flex-col rounded-2xl border bg-background">
+    <div className="flex h-[calc(100vh-70px)] mb-5 justify-baseline max-w-3xl mx-auto flex-col rounded-2xl border bg-background">
       <ChatHeader
         title={title}
         subtitle={subtitle}
