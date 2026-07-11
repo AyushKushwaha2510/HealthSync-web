@@ -33,3 +33,8 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   block: ChatBlock;
 }
+
+export interface SendMessage {
+  id: string;
+  message: string;
+}
