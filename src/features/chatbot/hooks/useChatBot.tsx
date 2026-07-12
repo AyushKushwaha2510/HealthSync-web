@@ -25,28 +25,36 @@ export const useChatBot = () => {
     setError(null)
     setThinking(true);
 
-    // Call the API
-    const res = await analyzePrescriptionApi(prescId);
+    try {
+      // Call the API
+      const res = await analyzePrescriptionApi(prescId);
 
-    if (!res) {
-      setError('Unable to Analyze, Please Try Again')
-    }
-
-    setThinking(false);
-
-    // add this response the messages
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        role: 'assistant',
-        block: {
-          type: ChatBlockType.ANALYSIS,
-          analysisType: 'prescription',
-          result: res
-        }
+      if (!res) {
+        setError('Unable to Analyze, Please Try Again')
       }
-    ])
+
+      setThinking(false);
+
+      // add this response the messages
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          role: 'assistant',
+          block: {
+            type: ChatBlockType.ANALYSIS,
+            analysisType: 'prescription',
+            result: res
+          }
+        }
+      ]);
+
+    } catch (error: any) {
+      setError(error.response.data.message);
+
+    } finally {
+      setThinking(false);
+    }
   }
 
   const handleSend = async (text: string) => {
@@ -86,7 +94,7 @@ export const useChatBot = () => {
             content: res,
           },
         },
-      ])
+      ]);
 
     } catch (error: any) {
       setError(error.response.data.message)
