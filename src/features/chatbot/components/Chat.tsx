@@ -31,11 +31,10 @@ export function Chat({
         subtitle={subtitle}
       />
 
-      {thinking && <p>Thinking ...</p>}
-      {error && <ErrorMessage message={error}/>}
-
       <ChatMessages
         messages={messages}
+        thinking={thinking}
+        error={error}
       />
 
       <ChatInput
