@@ -1,17 +1,18 @@
-'use client'
-
 import ChatBot from "@/features/chatbot/components/ChatBot";
-import { useSearchParams } from "next/navigation";
 
-export default function Page() {
-
-  const searchParams = useSearchParams();
-  const prescriptionId = searchParams.get("prescId");
+interface PageProps {
+  searchParams: Promise<{
+    prescId?: string;
+  }>;
+}
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const prescriptionId = params.prescId;
 
   return (
     <div className="mt-10">
       <ChatBot
-         {...(prescriptionId && { prescriptionId })}
+        {...(prescriptionId && { prescriptionId })}
       />
     </div>
   )
