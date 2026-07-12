@@ -17,7 +17,7 @@ export function AnalysisRenderer({
     case "prescription":
       return (
         <PrescriptionCard
-          prescription={block.result}
+          analysis={block.result}
         />
       );
 

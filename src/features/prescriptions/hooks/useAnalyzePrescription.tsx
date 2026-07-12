@@ -1,28 +1,28 @@
-import { useState } from "react"
-import { analyzePrescriptionApi } from "../api/prescription.api";
-import { PrescriptionAnalysis } from "../types/prescription.type";
+// import { useState } from "react"
+// import { analyzePrescriptionApi } from "../api/prescription.api";
+// import { PrescriptionAnalysis } from "../types/prescription.type";
 
-export const useAnalyzePrescription = () => {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [analysis, setAnalysis] = useState<PrescriptionAnalysis>()
+// export const useAnalyzePrescription = () => {
+//   const [loading, setLoading] = useState<boolean>(false);
+//   const [analysis, setAnalysis] = useState<PrescriptionAnalysis>()
 
-  const analyzePrescription = async (prescriptionId: string) => {
+//   const analyzePrescription = async (prescriptionId: string) => {
 
-    try {
-      setLoading(true);
+//     try {
+//       setLoading(true);
 
-      const res = await analyzePrescriptionApi(prescriptionId);
+//       const res = await analyzePrescriptionApi(prescriptionId);
 
-      setAnalysis(res)
+//       setAnalysis(res)
 
-    }
-    catch (error: any) {
-      console.error("error", error.response.data.message)
-    }
-    finally {
-      setLoading(false);
-    }
-  }
+//     }
+//     catch (error: any) {
+//       console.error("error", error.response.data.message)
+//     }
+//     finally {
+//       setLoading(false);
+//     }
+//   }
 
-  return { analyzePrescription, analysis, loading }
-}
+//   return { analyzePrescription, analysis, loading }
+// }
