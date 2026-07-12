@@ -5,8 +5,6 @@ import { useAllPrescription } from '../../hooks/useAllPrescription';
 import { Button } from '@/components/ui/button';
 import { formatDate, formatTime } from '@/helpers/date-time';
 import { downloadPrescriptionApi } from '../../api/prescription.api';
-import AnalyzePrescription from './analyze';
-import ChatBot from '@/features/chatbot/components/ChatBot';
 import { useRouter } from 'next/navigation';
 
 export default function AllPrescription() {
