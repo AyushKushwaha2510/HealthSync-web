@@ -105,6 +105,17 @@ export default function Navbar() {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
+                  href="/chatbot"
+                  className="group inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-slate-100"
+                >
+                  ChatBot
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
                   href="/about"
                   className="group inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-slate-100"
                 >
