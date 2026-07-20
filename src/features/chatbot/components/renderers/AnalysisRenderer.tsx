@@ -1,6 +1,4 @@
 import { AnalysisBlock } from "../../types/chat.type";
-
-import { LabReportCard } from "../cards/LabReportCard";
 import { PrescriptionCard } from "../cards/PrescriptionCard";
 
 interface AnalysisRendererProps {
