@@ -5,7 +5,7 @@ import DoctorAvailabilityDetails from "@/features/doctors-availability/component
 export default async function Page({ params }: { params: Promise<{ doctor_id: string }> }) {
   const { doctor_id } = await params;
   return (
-    <Container className="flex">
+    <Container className="flex items-start">
       <DoctorAvailabilityDetails id={doctor_id} />
       <AppointmentSummary/>
     </Container>
