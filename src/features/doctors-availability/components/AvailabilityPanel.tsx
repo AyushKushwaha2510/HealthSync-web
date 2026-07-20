@@ -74,7 +74,8 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
                               onClick={() => {
                                 dispatch(
                                   setCriteria({
-                                    slot
+                                    slot,
+                                    weekday: availability.weekday
                                   })
                                 )
 
@@ -91,11 +92,11 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
                                   })
                                 )
                               }}
-                              
+
                               className={`rounded-lg border p-3 text-sm font-medium transition
 
                               ${criteria?.slot === slot
-                                  // && criteria?.weekday === availability.weekday
+                                  && criteria?.weekday === availability.weekday
                                   ? 'border-blue-600 bg-blue-600 text-white'
                                   : ''
                                 }
@@ -124,45 +125,6 @@ export default function AvailabilityPanel({ doctorId }: { doctorId: string }) {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>
-            Appointment Summary
-          </CardTitle>
-        </CardHeader>
-
-        <CardContent className="space-y-2">
-          <p>
-            Date:{' '}
-            {criteria?.fromDate ??
-              '-'}
-          </p>
-
-          <p>
-            Weekday:{' '}
-            {criteria?.weekday ??
-              '-'}
-          </p>
-
-          <p>
-            Slot:{' '}
-            {criteria?.slot ??
-              '-'}
-          </p>
-
-          <p>
-            Hospital:{' '}
-            {criteria?.hospitalId ??
-              '-'}
-          </p>
-
-          <p>
-            Clinic:{' '}
-            {criteria?.clinicId ??
-              '-'}
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 }
