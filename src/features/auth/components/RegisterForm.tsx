@@ -17,7 +17,11 @@ import {
 } from '@/components/ui/select';
 
 export default function RegisterForm() {
-  const { register, loading, success, error } = useRegister();
+  const {
+    register,
+    loading, success, error,
+    sendMailOtp
+  } = useRegister();
 
   const [form, setForm] = useState<RegisterUserDto>({
     firstName: '',
@@ -41,6 +45,8 @@ export default function RegisterForm() {
   const handleSubmit = async () => {
     await register(form);
   };
+
+  const [isOpen, setIsOpen] = useState<boolean>(false); // state for opening OTP box
 
   return (
     <div className="flex items-center justify-center p-6">
@@ -97,7 +103,7 @@ export default function RegisterForm() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
 
             {/* DOB */}
@@ -143,7 +149,17 @@ export default function RegisterForm() {
 
           <Button
             className="h-11 w-full bg-teal-500 text-white hover:bg-teal-600"
-            onClick={handleSubmit}
+            onClick={()=>{
+              // send mail to otp
+              sendMailOtp({
+                firstName:form.firstName,
+                lastName:form.lastName,
+                email:form.email
+              })
+              
+              // open a otp box
+              setIsOpen(true)
+            }}
             disabled={loading}
           >
             {loading ? 'Creating Account...' : 'Create Account'}
