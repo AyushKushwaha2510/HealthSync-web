@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRegister } from '../hooks/useRegister';
 import { RegisterUserDto } from '../types/register.dto';
 
@@ -17,7 +17,14 @@ import {
 } from '@/components/ui/select';
 
 export default function RegisterForm() {
-  const { register, loading, success, error } = useRegister();
+  const {
+    register,
+    loading, success, error,
+    sendMailOtp,
+    isOtpSent,
+    verifyMailOtp,
+    isOtpVerified
+  } = useRegister();
 
   const [form, setForm] = useState<RegisterUserDto>({
     firstName: '',
@@ -41,6 +48,17 @@ export default function RegisterForm() {
   const handleSubmit = async () => {
     await register(form);
   };
+
+  const [isOpen, setIsOpen] = useState<boolean>(false); // state for opening OTP box
+
+  const [otp, setOtp] = useState<string | null>(null);
+
+  // Open OTP box
+  useEffect(() => {
+    if (isOtpSent) {
+      setIsOpen(true);
+    }
+  }, [isOtpSent]);
 
   return (
     <div className="flex items-center justify-center p-6">
@@ -97,7 +115,7 @@ export default function RegisterForm() {
               onChange={handleChange}
             />
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
 
             {/* DOB */}
@@ -143,11 +161,42 @@ export default function RegisterForm() {
 
           <Button
             className="h-11 w-full bg-teal-500 text-white hover:bg-teal-600"
-            onClick={handleSubmit}
+            onClick={() => {
+              // send mail to otp
+              sendMailOtp({
+                firstName: form.firstName,
+                lastName: form.lastName,
+                email: form.email
+              })
+            }}
             disabled={loading}
           >
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {loading ? 'Sending...' : 'Send OTP'}
           </Button>
+
+          {/* OTP */}
+          {isOpen && (
+            <div>
+              <Input
+                type="number"
+                value={otp ?? undefined}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+              <Button
+                disabled={otp === null}
+                onClick={() => {
+                  if (otp !== null) {
+                    verifyMailOtp({
+                      email: form.email,
+                      otp: Number(otp)
+                    });
+                  }
+                }}
+              >
+                Verify
+              </Button>
+            </div>
+          )}
 
           {success && (
             <div className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
