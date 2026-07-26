@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { RegisterUserDto } from '../types/register.dto';
 import { registerApi } from '../api/auth.api';
 import { toast } from 'sonner';
-import { EmailVerificationMail } from '@/features/emails/types/emails.type';
-import { sendEmailVerificationMailApi } from '@/features/emails/api/emails.api';
+import { EmailVerificationMail, VerifyMailOtp } from '@/features/emails/types/emails.type';
+import { sendEmailVerificationMailApi, verifyMailOtpApi } from '@/features/emails/api/emails.api';
 
 export const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
+  const [isOtpVerified, setIsOtpVerified] = useState<boolean>(false);
 
   const register = async (data: RegisterUserDto) => {
     try {
@@ -38,7 +40,9 @@ export const useRegister = () => {
       toast.success("Verification code sent to your email.", {
         id: toastId,
       });
-    } 
+
+      setIsOtpSent(true);
+    }
     catch (error: any) {
       const message =
         error?.response?.data?.message ||
@@ -60,11 +64,30 @@ export const useRegister = () => {
     }
   };
 
+  const verifyMailOtp = async (data: VerifyMailOtp) => {
+    setError(null);
+    try {
+      const res = await verifyMailOtpApi(data);
+
+      if (res.success) {
+        setIsOtpVerified(true);
+        toast.message('OTP Verified Successfully')
+      }
+
+    } catch (error: any) {
+      setError(error.response.data.message);
+      console.error("error", error.response.data.message);
+    }
+  }
+
   return {
     register,
     loading,
     success,
     error,
-    sendMailOtp
+    sendMailOtp,
+    isOtpSent, setIsOtpSent,
+    verifyMailOtp,
+    isOtpVerified, setIsOtpVerified,
   };
 };
