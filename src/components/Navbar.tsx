@@ -44,12 +44,12 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-bold text-blue-600">HealthSync</span>
-        </Link>
+        </Link>/
 
         {/* Navigation */}
         <NavigationMenu>
           <NavigationMenuList className='space-x-2'>
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuTrigger className='lg:text-[16px]'>Services</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid w-[400px] gap-2 p-4">
@@ -78,7 +78,7 @@ export default function Navbar() {
                   </NavigationMenuLink>
                 </div>
               </NavigationMenuContent>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
@@ -91,7 +91,7 @@ export default function Navbar() {
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
                   href="/appointments"
@@ -100,7 +100,7 @@ export default function Navbar() {
                   Appointments
                 </Link>
               </NavigationMenuLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
@@ -113,7 +113,7 @@ export default function Navbar() {
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            <NavigationMenuItem>
+            {/* <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
                   href="/about"
@@ -122,7 +122,7 @@ export default function Navbar() {
                   About
                 </Link>
               </NavigationMenuLink>
-            </NavigationMenuItem>
+            </NavigationMenuItem> */}
 
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
