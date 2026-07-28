@@ -40,7 +40,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full z-50 border-b border-black/20 bg-white/50 backdrop-blur-sm">
-      <div className="mx-auto flex h-16 max-w-[100rem] items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-400 items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl font-bold text-blue-600">HealthSync</span>
