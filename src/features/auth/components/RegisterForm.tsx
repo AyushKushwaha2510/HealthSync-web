@@ -198,11 +198,20 @@ export default function RegisterForm() {
             </div>
           )}
 
+          {isOtpVerified && (
+            <Button 
+              onClick={handleSubmit}
+            >
+              Create Account
+            </Button>
+          )}
+
           {success && (
             <div className="rounded-lg border border-green-200 bg-green-50 p-3 text-sm text-green-700">
               {success}
             </div>
           )}
+          
           {error && (
             <div className="rounded-lg border border-red-200 bg-red-50 p-3">
               {Array.isArray(error) ? (
