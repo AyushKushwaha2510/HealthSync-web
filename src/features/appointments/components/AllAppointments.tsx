@@ -6,6 +6,8 @@ import Loading from "@/components/Loading";
 import ErrorMessage from "@/components/ErrorMessage";
 import { AppointmentStatus } from "../types/appointment.type";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 export default function AllAppointments() {
   const { fetchAllAppointments, appointments, loading, error, success } = useAllAppointments();
@@ -13,6 +15,8 @@ export default function AllAppointments() {
   useEffect(() => {
     fetchAllAppointments();
   }, [])
+
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const router = useRouter();
 
@@ -67,7 +71,7 @@ export default function AllAppointments() {
                 <tr
                   key={appointment.id}
                   onClick={() =>
-                    router.push(`/doctors/appointments/${appointment.id}`)
+                    router.push(`/${user?.role}s/appointments/${appointment.id}`)
                   }
                   className="border-b transition-colors hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
                 >
