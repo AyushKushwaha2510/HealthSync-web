@@ -5,11 +5,11 @@ import PatientDetails from "@/features/patients/components/PatientDetails";
 
 export default function Dashboard() {
   return (
-    <Container>
-     <div>
+    // <Container>
+    //  <div>
       <PatientDetails/>
-     </div>
-    </Container>
+    //  </div>
+    // </Container>
   )
 }
 
