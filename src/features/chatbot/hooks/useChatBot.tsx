@@ -3,11 +3,15 @@ import { ChatBlockType, ChatMessage } from "../types/chat.type"
 import { analyzePrescriptionApi } from "@/features/prescriptions/api/prescription.api";
 import { sendMessageApi } from "../api/chatbot.api";
 
+// This is comman id for a chat
+const conversationId = crypto.randomUUID();
+
 export const useChatBot = () => {
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: 'welcome', // randomUUID() was causing hydration issue
+      id: 'welcome', // randomUUID() was causing hydration issue,
+      conversationId,
       role: "assistant",
       block: {
         type: ChatBlockType.TEXT,
@@ -40,6 +44,7 @@ export const useChatBot = () => {
         ...prev,
         {
           id: crypto.randomUUID(),
+          conversationId,
           role: 'assistant',
           block: {
             type: ChatBlockType.ANALYSIS,
@@ -67,6 +72,7 @@ export const useChatBot = () => {
         ...prev,
         {
           id: crypto.randomUUID(),
+          conversationId,
           role: "user",
           block: {
             type: ChatBlockType.TEXT,
@@ -78,6 +84,7 @@ export const useChatBot = () => {
       // send message
       const req = {
         id: crypto.randomUUID(),
+        conversationId,
         message: text
       }
 
@@ -88,6 +95,7 @@ export const useChatBot = () => {
         ...prev,
         {
           id: crypto.randomUUID(),
+          conversationId,
           role: "assistant",
           block: {
             type: ChatBlockType.TEXT,
@@ -110,6 +118,7 @@ export const useChatBot = () => {
       ...prev,
       {
         id: crypto.randomUUID(),
+        conversationId,
         role: "user",
         block: {
           type: ChatBlockType.ATTACHMENT,
