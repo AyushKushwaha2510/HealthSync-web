@@ -29,7 +29,7 @@ export default function ChatBot({
       analyzePrescription(prescriptionId)
     }, [prescriptionId])
   }
-  console
+
   return (
     <div className="h-screen p-6">
       <Chat
