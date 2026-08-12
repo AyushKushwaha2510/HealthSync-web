@@ -30,11 +30,13 @@ export type ChatBlock = TextBlock | AttachmentBlock | AnalysisBlock;
 
 export interface ChatMessage {
   id: string;
+  conversationId: string;
   role: 'user' | 'assistant';
   block: ChatBlock;
 }
 
 export interface SendMessage {
   id: string;
+  conversationId: string;
   message: string;
 }
