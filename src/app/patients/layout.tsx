@@ -37,6 +37,10 @@ const tabs = [
     path: '/patients/prescriptions',
   },
   {
+    label: 'Register as Doctor',
+    path: '/doctors/registration-request',
+  },
+  {
     label: 'Report a Bug',
     path: '/dashboard/bug',
   },
