@@ -25,6 +25,7 @@ export default function DoctorRegisterRequestForm() {
     hospitalIds: [],
     clinicIds: [],
     licenseNumber: '',
+    appointmentFee: '0'
   });
 
   const {
@@ -170,6 +171,16 @@ export default function DoctorRegisterRequestForm() {
             <Input
               type="text"
               name="licenseNumber"
+              onChange={handleChange}
+            />
+          </div>
+          
+          {/* Appointment Fee */}
+          <div className="space-y-2">
+            <Label>Appointment Fee</Label>
+            <Input
+              type="text"
+              name="appointmentFee"
               onChange={handleChange}
             />
           </div>
